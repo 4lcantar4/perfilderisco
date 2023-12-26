@@ -1,71 +1,79 @@
 <!DOCTYPE html>
 <head>
+    <!-- Links para fontes, ícones e CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700%7CRoboto:400,700" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href='style.css' rel='stylesheet' type='text/css'>
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700%7CRoboto:400,700" rel="stylesheet">
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-<link href='style.css' rel='stylesheet' type='text/css'>
-<title>Teste de Adequação de Investimentos</title>
-<meta charset="utf-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Título e meta tags -->
+    <title>Teste de Adequação de Investimentos</title>
+    <meta charset="utf-8">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Estilo para o spinner -->
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            margin: 10px auto; /* Reduzido para aproximar do texto */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Estilos para responsividade em dispositivos móveis */
+        @media (max-width: 600px) {
+            .loader {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="main">
+        <br><br>
+        <h1>Teste de Adequação de Investimentos</h1>
+        <br>
 
-<div class="main">
-<br><br>
-<h1>Teste de Adequação de Investimentos</h1>
-<br>
+        <p class="question" style="display: flex;flex-direction: column" id="mensagem">
+            Obrigado por participar!<br>
+            Aguarde alguns instantes estamos salvando as respostas e calculando seu resultado!
+        </p>
 
-<br>
+        <!-- Spinner de carregamento -->
+        <div class="loader" id="spinner"></div>
+        <br>
 
-<p class="question" style="display: flex;flex-direction: column"> Prezado(a) participante, <br>
-    Agradecemos a participação, estamos enviando as respostas!<br>
-    Status: <span id="statusSend" style="font-size: 36pt; color:red">Não enviado... Aguarde!</span>
-</p>
-<br>
-<br>
-<button class="button" style="background-color: red" id="restartbutton" >Reenviar</button>
-<a class="button" href="https://sites.google.com/view/seuperfildeinvestidor/" style="margin-top: 10px">Ver os perfis de aversão à perda</a>
-
-
-
-</div>
+        <!-- Botão Reenviar e Ver Perfis serão controlados via JavaScript -->
+        <button class="button" style="background-color: red; display: none;" id="restartbutton">Reenviar</button>
+        <a class="button" href="https://sites.google.com/view/seuperfildeinvestidor/" style="margin-top: 10px; display: none;" id="verPerfisButton">Ver os perfis de aversão à perda</a>
+    </div>
 
     <script type="text/javascript">
-
+        // Evento para o botão de reenvio
         document.getElementById("restartbutton").addEventListener("click", function() {
-            document.getElementById("restartbutton").disabled = true;
-            alterarStatus(false)
-            sendInformation()
-            setTimeout(() => {document.getElementById("restartbutton").disabled = false }, 10000)
-            });
+            document.getElementById("restartbutton").style.display = "none";
+            sendInformation();
+        });
 
-        document.getElementById("restartbutton").disabled = true;
-
-        function alterarStatus(status = true){
-            const not_send_text = "Não enviado... Aguarde!"
-            const send_text = "Enviado!"
-            const not_send_color = "red"
-            const send_color = "blue"
-
-            const elemento = document.getElementById("statusSend");
-            if (status) {
-                elemento.textContent = send_text
-                elemento.style.color = send_color
-            } else {
-                elemento.textContent = not_send_text
-                elemento.style.color = not_send_color
-            }
-        }
-
-        function sendInformation(){
-            let data = {}
-            data.SocioEconomics = JSON.parse(localStorage.SocioEconomics)
-            data.RiskAverssion = JSON.parse(localStorage.RiskAverssion)
-            data.Quiz = JSON.parse(localStorage.Quiz)
+        // Função para enviar as informações
+        function sendInformation() {
+            let data = {};
+            data.SocioEconomics = JSON.parse(localStorage.SocioEconomics);
+            data.RiskAverssion = JSON.parse(localStorage.RiskAverssion);
+            data.Quiz = JSON.parse(localStorage.Quiz);
 
             let jsonData = JSON.stringify(data);
-
             let encodedData = encodeURIComponent(jsonData);
 
             let url = `https://script.google.com/macros/s/AKfycby7vlwGMpMw36HLgxlYpsP4C7g0GK5a2rVUHdUeyNDGzlYGSzv6zlXLmx0vVpor3hI3tQ/exec?data=${encodedData}`;
@@ -73,18 +81,37 @@
             fetch(url, {
                 method: "GET"
             }).then(response => {
-                alterarStatus()
-            })
-                .catch(error => {
-                    console.error("Erro", error);
-                })
-            document.getElementById("restartbutton").disabled = false;
+                sucessoNoEnvio();
+            }).catch(error => {
+                falhaNoEnvio();
+            });
         }
 
-    sendInformation()
-	    
+        // Função para lidar com sucesso no envio
+        function sucessoNoEnvio() {
+            document.getElementById("spinner").style.display = "none";
+            calcularEExibirCoeficiente();
+            document.getElementById("verPerfisButton").style.display = "block";
+        }
+
+        // Função para lidar com falha no envio
+        function falhaNoEnvio() {
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("mensagem").textContent = "Ops..algo deu errado, clique no botão abaixo";
+            document.getElementById("restartbutton").style.display = "block";
+        }
+
+        // Função para calcular e exibir o coeficiente
+        function calcularEExibirCoeficiente() {
+            if (localStorage.Quiz) {
+                const quiz = JSON.parse(localStorage.Quiz);
+                const coeficiente = quiz.etapa1 / quiz.etapa3;
+                document.querySelector('#mensagem').textContent = "Seu coeficiente de aversão: " + coeficiente.toFixed(2);
+            }
+        }
+
+        // Inicializa o envio das informações
+        sendInformation();
     </script>
-
 </body>
-
 </html>
