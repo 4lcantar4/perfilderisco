@@ -5,6 +5,7 @@ html {
     align-items: center;
     align-content: center;
 }
+
 body {
     width: 80%;
     height: 100%;
@@ -19,12 +20,13 @@ body {
 div.main {
     height: 100%;
     width: 100%;
-    max-width: 1000px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: center;
 }
+
 div.element {
     width: 85%;
     padding: 16pt;
@@ -33,9 +35,11 @@ div.element {
     border-radius: 16px;
     margin: auto;
 }
+
 div.tablang {
     display: block;
 }
+
 p {
     color: #444444;
     font-family: 'Arial', serif;
@@ -43,10 +47,12 @@ p {
     line-height: 1;
     margin: 4pt;
 }
+
 p.value-description {
     text-indent: -16pt;
     margin-left: 20pt;
 }
+
 p.question {
     margin: 16pt auto;
     color: #333333;
@@ -63,6 +69,7 @@ p.question {
     align-items: center;
     text-align: justify;
 }
+
 p.ideodesc {
     font-family: 'Arial', serif;
     color: #333333;
@@ -71,6 +78,7 @@ p.ideodesc {
     margin-top: 12pt;
     margin-bottom: 0;
 }
+
 h1 {
     color: #222222;
     font-family: 'Arial', serif;
@@ -80,6 +88,7 @@ h1 {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 h2 {
     color: #333333;
     font-family: 'Arial', serif;
@@ -88,6 +97,7 @@ h2 {
     margin-top: 12pt;
     margin-bottom: 0;
 }
+
 h3 {
     color: #333333;
     font-family: 'Arial', serif;
@@ -96,26 +106,32 @@ h3 {
     margin-top: 12pt;
     margin-bottom: 0;
 }
+
 li {
     font-size: 16pt;
     text-indent: 16pt;
 }
+
 dt {
     font-family: 'Arial', serif;
 }
+
 dd {
     font-family: 'Arial', serif;
     margin-bottom: 12pt;
 }
+
 a {
     font-family: 'Arial', serif;
 }
+
 img.center {
     display: block;
     margin: 1em auto;
     width: 20%;
     min-width: 400pt;
 }
+
 .button {
     background-color: #2196f3;
     font-family: 'Arial', serif;
@@ -132,6 +148,7 @@ img.center {
     margin: -2px auto;
     cursor: pointer;
 }
+
 .small_button {
     background-color: #73b7dc;
     font-family: 'Arial', serif;
@@ -148,12 +165,14 @@ img.center {
     margin-right: 21%;
     cursor: pointer;
 }
+
 div.axis {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 div.bar {
     height: 36pt;
     line-height: 36pt;
@@ -169,9 +188,11 @@ div.bar {
     display: block;
     width: 50%;
 }
+
 span.weight-300 {
     font-weight: 300;
 }
+
 canvas {
     border-color: #444444;
     border-style: solid;
@@ -181,6 +202,7 @@ canvas {
     margin: 8pt 22% -1% 38%;
     width: 40%;
 }
+
 img.index {
     border-color: #444444;
     border-style: solid;
@@ -190,6 +212,7 @@ img.index {
     margin: 8pt;
     width: 80%;
 }
+
 img.allvalues {
     border-color: #444444;
     border-style: solid;
@@ -198,6 +221,7 @@ img.allvalues {
     display: block;
     width: 60%;
 }
+
 #langPicker {
     position: static;
     right: 10em;
@@ -323,9 +347,9 @@ li.nav a:hover:not(.active), #navres a:hover {
     outline: none;
 }
 
-/* Estilo quando o campo de entrada est� ativo (com foco) */
+/* Estilo quando o campo de entrada está ativo (com foco) */
 .input-button:focus {
-    box-shadow: 0 0 5px #2196f3; /* Adicione um efeito de destaque quando o campo est� ativo */
+    box-shadow: 0 0 5px #2196f3; /* Adiciona um efeito de destaque quando o campo está ativo */
 }
 
 #alternativas {
@@ -335,8 +359,7 @@ li.nav a:hover:not(.active), #navres a:hover {
     align-items: center;
     min-height: 100px;
     width: 80%; /* Largura da div */
-    /* Centraliza horizontalmente */
-    padding: 20px; /* Espa�amento interno */
+    padding: 20px; /* Espaçamento interno */
     margin: 0 auto 5px;
 }
 #alternativas .button {
@@ -424,8 +447,7 @@ li.nav a:hover:not(.active), #navres a:hover {
     justify-content: center;
     align-items: center;
     width: 90%; /* Largura da div */
-    /* Centraliza horizontalmente */
-    padding: 20px; /* Espa�amento interno */
+    padding: 20px; /* Espaçamento interno */
     margin: 0 auto 5px;
 }
 

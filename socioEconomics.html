@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700%7CRoboto:400,700" rel="stylesheet">
-<link href='style.css' rel='stylesheet' type='text/css'>
-<title data-i18n="title-quiz">Teste de Adequação de Investimentos Formulario</title>
-<link rel="icon" type="image/png" href="icon.png">
-<link rel="shortcut icon" type="image/png" href="icon.png">
-<meta charset="utf-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+  <link rel="stylesheet" href="style-soec.css" />
+  <title>Teste de Adequação de Investimentos Formulário</title>
 </head>
-
-<div class="main">
-<br>
-<h1>Socioeconômico</h1>
-<hr>
-<p class="question" id="question-text"></p>
-<div id="alternativas">
-    <button class="button" style="background-color: #2196f3;">Carregando...</button> <br>
-</div>
-    <button class="small_button" onclick="next_question()" id="back_button">Proxima</button>
-<br>
-</div>
+<body>
+  <div class="container">
+    <div class="start-screen">
+      
+      <div class="settings">
+        <p class="question" id="question-text"></p>
+        <div id="alternativas">
+          <button class="btn1" style="background-color: transparent;border: none;"><i class="fas fa-spinner fa-spin"></i> Carregando</button>
+        </div>
+        <button class="btn" onclick="next_question()" id="back_button">Continuar</button>
+      </div>
+    </div>
+  </div>
 <script>
     const file = "Questionarios/parte2- QUEST.SOCIOECONOMICO.txt"
     let id_questao
@@ -72,44 +72,61 @@
     }
 
     function selectAlternativa(alternativa){
-        const elementosComBorder = document.querySelectorAll('.Selected');
-
-        elementosComBorder.forEach(elemento => {
-            elemento.style.removeProperty('border')
-            elemento.classList.remove("Selected")
-        });
-
-        const elementoComAtributoX = document.querySelector(`button[alternativa="${alternativa}"]`);
-        elementoComAtributoX.classList.add("Selected")
-        next_question()
+    let radioInput = document.getElementById("alternativa-" + alternativa);
+    if (radioInput) {
+        radioInput.checked = true;
     }
-
-    function sumirBotaoProximo(sumir) {
-        let botao = document.querySelector("#back_button");
-        if (sumir) {
-            botao.style.display = 'none';
-        } else {
-            botao.style.display = 'block';
-        }
+    let btnContinuar = document.getElementById("back_button");
+     if (btnContinuar) {
+      btnContinuar.classList.remove("btn-inativo");
+     btnContinuar.classList.add("btn-ativo");
     }
+    next_question();
+}
+
+function sumirBotaoProximo(sumir) {
+    let botao = document.querySelector("#back_button");
+    if (sumir) {
+        botao.classList.remove("btn-ativo");
+        botao.classList.add("btn-inativo");
+        botao.disabled = true; // Desabilita o botão para evitar cliques
+    } else {
+        botao.classList.remove("btn-inativo");
+        botao.classList.add("btn-ativo");
+        botao.disabled = false; // Habilita o botão
+    }
+}
+
 
 
     function plotAlternativas(){
-        const regex = /A(\d+)/;
+    const regex = /A(\d+)/;
 
-        const aswnerBox = document.querySelector('div[id="alternativas"]')
-        aswnerBox.innerHTML = ''
-        const questao = window.questions[window.chave_questao]
-        for (let i = 1; i <= parseInt(questao['Tipo de Resposta'].match(regex)[1]); i++) {
-            let alternativa = document.createElement("button")
-            alternativa.className = 'button';
-            alternativa.setAttribute("Alternativa",i)
-            alternativa.textContent = questao[`Alternativa ${i}`]
-            alternativa.setAttribute("onclick",`selectAlternativa("${i}")`);
-            aswnerBox.appendChild(alternativa)
-        }
-        sumirBotaoProximo(true)
+    const aswnerBox = document.querySelector('div[id="alternativas"]')
+    aswnerBox.innerHTML = ''
+    const questao = window.questions[window.chave_questao]
+    for (let i = 1; i <= parseInt(questao['Tipo de Resposta'].match(regex)[1]); i++) {
+        let container = document.createElement("div");
+        container.className = 'radio-container';
+
+        let radioInput = document.createElement("input");
+        radioInput.type = "radio";
+        radioInput.id = "alternativa-" + i;
+        radioInput.name = "alternativa";
+        radioInput.value = i;
+
+        let label = document.createElement("label");
+        label.htmlFor = "alternativa-" + i;
+        label.textContent = questao[`Alternativa ${i}`];
+        label.className = 'radio-label';
+
+        container.appendChild(radioInput);
+        container.appendChild(label);
+
+        aswnerBox.appendChild(container);
     }
+    sumirBotaoProximo(false)
+}
 
     function plotString(){
         let aswnerBox = document.querySelector('div[id="alternativas"]')
@@ -158,18 +175,17 @@
     }
 
     function respAlternativa(){
-        let aswnerBox = document.querySelector('div[id="alternativas"]')
-        let selectedButton = aswnerBox.querySelector('button.Selected');
-        if(!selectedButton){
-            alert("Selecione uma opção!")
-            return false
-        }
-
-        let resp = selectedButton.getAttribute('alternativa')
-        window.resposta[window.id_questao] = resp
-        return true
-
+    let aswnerBox = document.querySelector('div[id="alternativas"]')
+    let selectedRadio = aswnerBox.querySelector('input[name="alternativa"]:checked');
+    if(!selectedRadio){
+        alert("Selecione uma opção!")
+        return false
     }
+
+    let resp = selectedRadio.value;
+    window.resposta[window.id_questao] = resp;
+    return true;
+}
 
     function respString(){
         const input_box = document.querySelector('#alternativas > input')

@@ -1,45 +1,31 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700%7CRoboto:400,700" rel="stylesheet">
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-<link href='style.css' rel='stylesheet' type='text/css'>
-<title>Teste de Adequação de Investimentos</title>
-<meta charset="utf-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="style-index.css" />
+    <title>Teste de Adequação de Investimentos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-
 <body>
-
-<div class="main">
-<br><br>
-<h1>Teste de Aversão a Perda</h1>
-<br>
-
-<div id="about" class="tabcontent">
-	
-	<p class="index_text">
-        Prezado(a) participante, <br>
-        Para participar da pesquisa, leia o termo e no final da pagina clique em "Começar" <br>
-    </p>
-    <embed class="pdf-container" src="./TCLE.pdf" width="100%" height="500px" type="application/pdf"/>
-    <p class="index_text">
-        Ao continuar você declara que leu o Termo de Consentimento Livre e Esclarecido e concorda em participar voluntariamente na pesquisa sobre percepção de risco.
-    </p>
-    <button class="button" onclick="location.href='instructions.html';" style="width: 60%; min-width: 0" id="startbutton" data-i18n="index-start">Começar</button>
-</div>
-	
-
-</div>
-
+    <div class="container">
+        <h1 class="heading"> QUIZ-Qual é o seu perfil de investidor? </h1>
+        <div class="start-screen">
+            <p class="index_text">
+                Responda a algumas perguntas e saiba como suas emoções, metas e disposição para correr riscos podem te ajudar a escolher os investimentos mais adequados para você.<br>
+            </p>
+            <embed class="pdf-container" src="./TCLE.pdf" width="50%" height="500px" type="application/pdf"/>
+            <ul><input type="radio" onclick="location.href='instructions.html';" id="startbutton">Eu li o Termo de Consentimento Livre e Esclarecido da pesquisa e concordo em participar voluntariamente.</ul>
+            
+        </div>
+    </div>
     <script type="text/javascript">
         const versaoAtual = '1.0';
-
         if (localStorage.getItem('versao') !== versaoAtual) {
             localStorage.clear();
             localStorage.setItem('versao', versaoAtual);
         }
     </script>
 </body>
-
 </html>

@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700%7CRoboto:400,700" rel="stylesheet">
-<link href='style.css' rel='stylesheet' type='text/css'>
-<title data-i18n="title-instructions">Adequação de Investimentos Instructions</title>
-<link rel="icon" type="image/png" href="icon.png">
-<link rel="shortcut icon" type="image/png" href="icon.png">
-<meta charset="utf-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="style-instructions.css" />
+    <title>Teste de Adequação de Investimentos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-
-<div class="main">
-<br>
-<h1>Instrução</h1>
-    <hr>
-    <p class="question" style="text-align: left"> Obrigado por concordar em participar da nossa pesquisa!<br>
-
-        O questionário terá duração aproximada de 15 minutos e sua participação é confidencial e anônima.
-        Lembrando: <br><br>
-
-        -Todas as suas respostas serão tratadas de forma confidencial.<br>
-        -Sua honestidade é crucial para o sucesso deste estudo. Responda a todas as perguntas, mesmo que algumas pareçam similares.<br>
-        -Não há respostas “certas” ou “erradas”. Opte pela opção que melhor representa seus sentimentos.<br>
-    </p>
-
-    <button data-i18n="inst-gotit" class="button" onclick="location.href='socioEconomics.html';"
-            style="background-color: #2196f3;">Entendido</button> <br>
-    <button data-i18n="inst-nvm" class="button" onclick="location.href='index.html';"
-        style="background-color: #f44336;">Não tenho interesse</button> <br>
-</div>
+    <div class="container">
+        <h1 class="heading"> Instruções para o Quiz</h1>
+        <div class="start-screen">
+            <p><b>Bem-vindo ao quiz!</b></p>
+            <br>
+            <ulstyle="text-align: left>
+            <li><b>Duração:</b> 5 a 10 minutos</li>
+            <li><b>Confidencialidade:</b> Suas respostas serão tratadas de forma confidencial e anônima.</li>
+            <li><b>Respostas:</b> Não há respostas "corretas" ou "erradas". Opte pela opção que melhor representa o que você pensa.</li>
+            <li><b>Completude:</b> Mesmo que sejam parecidas, responda todas as perguntas para que possamos calcular seus resultados.</li>
+              </ul>
+              <br>
+            <div class="buttons">
+                <button data-i18n="inst-nvm" class="quit" onclick="location.href='index.html';">Sair</button>
+                <br>
+                <button data-i18n="inst-gotit" class="cont" onclick="location.href='socioEconomics.html';">Continuar</button>
+            </div>
+    <script type="text/javascript">
+        const versaoAtual = '1.0';
+        if (localStorage.getItem('versao') !== versaoAtual) {
+            localStorage.clear();
+            localStorage.setItem('versao', versaoAtual);
+        }
+    </script>
 </body>
 </html>
