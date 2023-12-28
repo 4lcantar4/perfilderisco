@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700%7CRoboto:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link href='style.css' rel='stylesheet' type='text/css'>
-    <title data-i18n="title-quiz">Teste de Adequação de Investimentos</title>
+    <title data-i18n="title-quiz">QUIZ-Qual é o seu perfil de investidor?</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="utf-8">
 </head>
 
 <div class="main">
 <br>
-<h1>Elicitações</h1>
 <hr>
 <p class="question" id="question-text" style="display: block; flex-direction: row;" ></p>
 <div id="alternativasCircle">
-
 </div>
     <button class="small_button" onclick="start_questions()" id="back_button" style="display: none">Proxima</button>
 <br>
@@ -347,51 +346,36 @@
         start_questions()
     }
 
-    function instruction(){
-        var questionText = document.querySelector('p[class="question"]')
-        questionText.innerHTML = `Você será apresentado a duas alternativas, uma certa (A) e uma incerta (B), e deverá escolher entre uma delas. <br>
-                                    A alternativa A acontecerá com certeza, ou seja, com 100% de chance.<br> A alternativa B terá dois cenários, cada
-                                    um com 50% de chance de acontecer`
-        var bloco_resps = document.querySelector('div[id="alternativasCircle"]')
-        bloco_resps.innerHTML = ''
-        let questoes = window.questions
+    function instruction() {
+    var questionText = document.querySelector('p[class="question"]');
+    questionText.innerHTML = 
+    
+    
+    `A partir de agora, você será apresentado a duas alternativas:
+    <br><br>
+    <b>A</b> acontecerá com certeza, ou seja, com 100% de chance.
+    <br><br>
+    <b>B</b> terá dois resultados possíveis com probabilidades iguais de acontecer (50% de chance).
+    </p>
+    <br>
+    A alternativa B é como apostar em cara ou coroa em um jogo de cara ou coroa. Você tem 50% de chance de ganhar sua aposta e 50% de chance de perder sua aposta.
+    <br><br>
+    ⚠️<b>ATENÇÃO: Os números irão mudar conforme você responde, e não há como voltar.`;
 
-        const alternativaRisk = document.createElement("button")
-        alternativaRisk.className = 'button';
-        alternativaRisk.style.backgroundColor = 'white';
-        alternativaRisk.setAttribute("ID","Risk")
-        alternativaRisk.setAttribute("onclick", `instructionSelect("Risk")`);
-        alternativaRisk.classList.add('alternativa')
-        alternativaRisk.classList.add('AltCircle')
+    var blocoResps = document.querySelector('div[id="alternativasCircle"]');
+    blocoResps.innerHTML = '';
 
-        var alternativaSafe = document.createElement("button")
-        alternativaSafe.className = 'button';
-        alternativaSafe.style.backgroundColor = 'white';
-        alternativaSafe.setAttribute("ID","Safe")
-        alternativaSafe.setAttribute("onclick", `instructionSelect("Safe")`);
-        alternativaSafe.classList.add('alternativa')
-        alternativaSafe.classList.add('AltCircle')
+    var entendiButton = document.createElement("button");
+    entendiButton.className = 'button Selected'; // Adiciona a classe "Selected"
+    entendiButton.textContent = 'Entendi';
+    entendiButton.onclick = function() {
+        this.classList.add("Selected"); // Garante que a classe "Selected" esteja definida
+        start_questions(); // Inicia as questões
+    };
 
-        var img1 = document.createElement("img");
-        img1.src = "img/2.svg";
-        img1.alt = "Imagem 1";
-        img1.width = 300
-        img1.height = 500
+    blocoResps.appendChild(entendiButton);
+}
 
-        var img2 = document.createElement("img");
-        img2.src = "img/1.svg";
-        img2.alt = "Imagem 2";
-        img2.width = 300
-        img2.height = 500
-
-        alternativaSafe.appendChild(img1)
-        alternativaRisk.appendChild(img2)
-
-        bloco_resps.appendChild(alternativaSafe)
-        bloco_resps.appendChild(document.createElement("br"))
-        bloco_resps.appendChild(alternativaRisk)
-        bloco_resps.appendChild(document.createElement("br"))
-    }
      function ajustarTam() {
         let maxDimension = 0;
         let elements = document.querySelectorAll('.AltCircle');
