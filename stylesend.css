@@ -1,4 +1,3 @@
-/* CSS primeiro */
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 
 * {
@@ -13,7 +12,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: #fff; /* Substitua pelo branco do segundo CSS (#fff) */
+  background: #fff;
   padding-top: 20px;
 }
 
@@ -21,7 +20,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 600px;
-  background: #fff; /* Substitua pelo branco do segundo CSS (#fff) */
+  background: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -31,12 +30,12 @@ body {
 .heading {
   text-align: center;
   font-size: 24px;
-  color: #333; /* Substitua pela cor cinza escura do segundo CSS (#333) */
+  color: #333;
   margin-bottom: 30px;
 }
 
 .index_text, .ul, .li, .mensagem {
-  color: #333; /* Substitua pela cor cinza escura do segundo CSS (#333) */
+  color: #333;
   font-size: 18px;
   margin-bottom: 20px;
 }
@@ -44,7 +43,7 @@ body {
 .btn {
   width: 60%;
   height: 60px;
-  background: #ffa500; /* Substitua pela cor laranja do segundo CSS (#ffa500) */
+  background: #ffa500;
   border: none;
   border-radius: 10px;
   color: #fff;
@@ -57,7 +56,7 @@ body {
 }
 
 .btn:hover {
-  background: #e69500; /* Substitua pela cor laranja escura do segundo CSS (#e69500) */
+  background: #e69500;
 }
 
 .buttons {
@@ -84,22 +83,22 @@ body {
 
 .buttons button.quit {
   background: #fff;
-  border: 1px solid #FF7800; /* Substitua pela cor azul do segundo CSS (#007bff) */
-  color: #FF7800; /* Substitua pela cor azul do segundo CSS (#007bff) */
+  border: 1px solid #FF7800;
+  color: #FF7800;
 }
 
 .buttons button.quit:hover {
-  background: #FF7800; /* Substitua pela cor azul do segundo CSS (#007bff) */
-  color: #fff; /* Substitua pela cor branca do segundo CSS (#fff) */
+  background: #FF7800;
+  color: #fff;
 }
 
 .buttons button.cont {
-  background-color: #FF7800; /* Substitua pela cor azul do segundo CSS (#007bff) */
-  color: #fff; /* Substitua pela cor branca do segundo CSS (#fff) */
+  background-color: #FF7800;
+  color: #fff;
 }
 
 .buttons button.cont:hover {
-  background: #FF7800; /* Substitua pela cor azul escura do segundo CSS (#258eff) */
+  background: #FF7800;
 }
 
 .loader {
@@ -111,19 +110,23 @@ body {
   animation: spin 2s linear infinite;
   margin: 10px auto;
 }
-/* Add your existing styles here */
-/* Include Swiper styles for the profile sliders */
+
+/* Swiper styles for the profile sliders */
 .swiper-container {
   margin-top: 20px;
+  height: auto;
+  margin-bottom: 50px;
 }
 
 .swiper-slide {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   text-align: center;
+  background: transparent;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .swiper-slide .title {
@@ -144,15 +147,15 @@ body {
   margin-top: 10px;
 }
 
-.swiper-pagination-bullet-active {
-  background: #FF6600;
-}
-
 .swiper-button-next,
 .swiper-button-prev {
   color: #FF6600;
+  background-size: 50%;
 }
 
+.swiper-pagination-bullet-active {
+  background: #FF6600;
+}
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
