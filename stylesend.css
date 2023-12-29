@@ -111,51 +111,14 @@ body {
   margin: 10px auto;
 }
 
-/* Swiper styles for the profile sliders */
-.swiper-container {
-  margin-top: 20px;
-  height: auto;
-  margin-bottom: 50px;
-}
-
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+#verPerfisButton {
   text-align: center;
-  background: transparent;
-  padding: 20px;
-  box-sizing: border-box;
+  width: 100%; /* Ajuste a largura conforme necessário */
+  background: #FF7800; 
+  width: 300px;
+  height: 30px;/* Outros estilos que desejar */
 }
 
-.swiper-slide .title {
-  color: #FF6600;
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.swiper-slide .description {
-  color: #7A8794;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.swiper-slide .lambda {
-  color: #8A99A6;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  color: #FF6600;
-  background-size: 50%;
-}
-
-.swiper-pagination-bullet-active {
-  background: #FF6600;
-}
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -179,6 +142,12 @@ body {
   .btn {
     width: 90%;
   }
+
+  .loader {
+    width: 40px;
+    height: 40px;
+  }
+}
 
   .loader {
     width: 40px;
