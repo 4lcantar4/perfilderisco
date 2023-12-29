@@ -5,7 +5,7 @@ const KEYS_EXPECTED_ORDER = ["SocioEconomics.QS1", "SocioEconomics.QS2A", "Socio
     "RiskAverssion.RTAT3", "RiskAverssion.RTFK3", "RiskAverssion.RTFK1", "RiskAverssion.RTFIN1", "RiskAverssion.RTFIN2",
     "Quiz.etapa1", "Quiz.etapa2", "Quiz.etapa3"]
 
-const SPREADSHEET_ID = '15neVD2GpG7ozuTrtUV_668AyEENbV53M5XpJfNrukiM'
+const SPREADSHEET_ID = '1IZckvymr9ikwI4HkQJmHQcHMLgKl__IS2hd58vabjEk'
 const SHEET_NAME = 'Dados Brutos'
 const ID_COLUMN_REFERENCE = 1
 
@@ -94,13 +94,13 @@ function encontrarValorNaColuna(page, valorProcurado) {
 
     for (var i = ultimaLinha - 1; i >= 0; i--) {
         if (String(valoresColuna[i][0]) === String(valorProcurado)) {
-            // Encontrou o valor, faça algo aqui
-            var linhaEncontrada = i + 1;  // Adiciona 1 para obter o número da linha real
+            // Encontrou o valor, fa�a algo aqui
+            var linhaEncontrada = i + 1;  // Adiciona 1 para obter o n�mero da linha real
             return linhaEncontrada;
         }
     }
 
-    // Valor não encontrado, retorna a última linha
+    // Valor n�o encontrado, retorna a �ltima linha
     return ultimaLinha + 1;
 }
 
