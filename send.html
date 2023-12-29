@@ -118,50 +118,11 @@
             document.getElementById("restartbutton").style.display = "block";
         }
 
-        function calcularEExibirCoeficiente() {
-            if (localStorage.getItem("Quiz")) {
-                const quiz = JSON.parse(localStorage.getItem("Quiz"));
-                const coeficiente = quiz.etapa1 / quiz.etapa3;
-                document.getElementById('mensagem').textContent = "Seu coeficiente de aversão: " + coeficiente.toFixed(2);
-                initializeSwiper();
-            }
+               function displayResults(coefficient) {
+            document.getElementById('resultMessage').textContent = "Seu coeficiente de aversão: " + coefficient.toFixed(2);
+            document.querySelector('.swiper-container').style.display = 'block';
+            swiper.update(); // Update Swiper to recalculate sizes and positions
         }
-// Função de inicialização do Swiper
-function initializeSwiper() {
-    document.getElementById("swiperContainer").style.display = "block";
-    
-    const profiles = [
-        {
-            title: "Perfil: Aventureiro",
-            description: "Busca emoção no mercado e está disposto a assumir riscos elevados em busca de ganhos expressivos. O investidor aventureiro é movido pela busca incessante de oportunidades ousadas, priorizando retornos extraordinários em detrimento do medo de perdas significativas.",
-            lambda: "Intervalo de λ: 0 < λ < 0,5"
-        },
-        {
-            title: "Perfil: Arrojado",
-            description: "Disposto a correr riscos consideráveis para buscar ganhos expressivos, mantendo alguma cautela. Busca uma rentabilidade atraente e valoriza a diversificação da carteira.",
-            lambda: "Intervalo de λ: 0,5 ≤ λ < 1"
-        },
-        {
-            title: "Perfil: Moderado",
-            description: "Equilíbrio entre risco e retorno, disposto a correr riscos moderados, buscando uma boa rentabilidade e valorizando a diversificação da carteira.",
-            lambda: "Intervalo de λ: 1 ≤ λ < 1,75"
-        },
-        {
-            title: "Perfil: Equilibrado",
-            description: "Prefere um equilíbrio razoável entre rentabilidade e segurança, aberto a riscos moderados e adaptando estratégias de acordo com o mercado.",
-            lambda: "Intervalo de λ: 1,75 ≤ λ < 2,5"
-        },
-        {
-            title: "Perfil: Conservador",
-            description: "Prioriza a proteção do capital, disposto a correr riscos baixos para obter ganhos, valorizando investimentos de baixo risco e média liquidez.",
-            lambda: "Intervalo de λ: 2,5 ≤ λ < 4"
-        },
-        {
-            title: "Perfil: Cauteloso",
-            description: "Preocupa-se principalmente com a segurança, evitando riscos de perda a todo custo, optando por investimentos de renda fixa com garantias sólidas.",
-            lambda: "Intervalo de λ: λ ≥ 4"
-        }
-    ];
 
     new Swiper('.swiper-container', {
         slidesPerView: 1,
