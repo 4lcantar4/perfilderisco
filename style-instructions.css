@@ -54,7 +54,6 @@ body {
   transition: 0.3s linear;
   display: block;
   margin: 0 auto;
-  font-family: "Poppins";
 }
 
 .btn:hover {
@@ -79,6 +78,7 @@ body {
   width: 100px;
   color: #fff;
   border-radius: 5px;
+  font-family: 'Varela Round', sans-serif;
   transition: all 0.25s ease;
 }
 
