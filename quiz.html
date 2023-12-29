@@ -50,6 +50,7 @@
     var stage = "etapa1"
     var respostas = {};
 
+   
     function buildCircle(colorLeft, textLeft, colorRight = '', textRight = ''){
         if(colorRight) {
             const divCircleRisk = document.createElement("div");
@@ -103,13 +104,13 @@
         text_question.innerHTML = window.questions[window.stage].Text
 
         if (window.stage === "etapa1"){
-            let textoRisk = `<strong>Alternativa B</strong> <br>
-                           <strong>50%</strong> chance de ganhar<br>
-                          <strong>50%</strong> chance de não ter ganho`
+            let textoRisk = `<strong>Alternativa B</strong> <br></br>
+                           <strong>50%</strong> chance de ganhar<br></br>
+                          <strong>50%</strong> chance de não ter ganho<br></br>`
             let elemento_textoRisk = document.createElement('p')
             elemento_textoRisk.innerHTML = textoRisk
 
-            let textoSafe = "<strong>Alternativa A</strong><br>Ganho<strong> com certeza</strong> <br> ‎"
+            let textoSafe = "<strong>Alternativa A</strong><br></br><br></br>Ganho<strong> com certeza</strong> <br></br> ‎"
             let elemento_textoSafe = document.createElement('p')
             elemento_textoSafe.innerHTML = textoSafe
 
@@ -123,13 +124,13 @@
             alternativaSafe.appendChild(divCircleSafe)
 
         } else if (window.stage === "etapa2"){
-            let textoRisk = `<strong>Alternativa B</strong> <br>
-                           <strong>50%</strong> chance de ganhar<br>
-                          <strong>50%</strong> chance de perder`
+            let textoRisk = `<strong>Alternativa B</strong> <br></br>
+                           <strong>50%</strong> chance de ganhar<br></br>
+                          <strong>50%</strong> chance de perder<br></br>`
             let elemento_textoRisk = document.createElement('p')
             elemento_textoRisk.innerHTML = textoRisk
 
-            let textoSafe = "<strong>Alternativa A</strong><br>Sem ganho ou perda <br> <strong> com certeza</strong>"
+            let textoSafe = "<strong>Alternativa A</strong><br></br></br>Sem ganho ou perda <br> <strong> com certeza</strong><br></br>"
             let elemento_textoSafe = document.createElement('p')
             elemento_textoSafe.innerHTML = textoSafe
 
@@ -143,13 +144,13 @@
             alternativaSafe.appendChild(divCircleSafe)
 
         } else if (window.stage === "etapa3") {
-            let textoRisk = `<strong>Alternativa B</strong> <br>
-                           <strong>50%</strong> chance de perder<br>
-                          <strong>50%</strong> chance de não perder`
+            let textoRisk = `<strong>Alternativa B</strong> <br></br>
+                           <strong>50%</strong> chance de perder<br></br>
+                          <strong>50%</strong> chance de não perder<br></br>`
             let elemento_textoRisk = document.createElement('p')
             elemento_textoRisk.innerHTML = textoRisk
 
-            let textoSafe = "<strong>Alternativa A</strong><br>Perda <strong>com certeza</strong> <br> ‎"
+            let textoSafe = "<strong>Alternativa A</strong><br></br><br></br>Perda <strong>com certeza</strong> <br></br> ‎"
             let elemento_textoSafe = document.createElement('p')
             elemento_textoSafe.innerHTML = textoSafe
 
