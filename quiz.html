@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link href='style.css' rel='stylesheet' type='text/css'>
+    <link href='stylequiz.css' rel='stylesheet' type='text/css'>
     <title data-i18n="title-quiz">QUIZ-Qual é o seu perfil de investidor?</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="utf-8">
@@ -24,7 +24,8 @@
         "etapa1": 
             {
                 "Text":`<strong>Escolha o seu cenário: ganho certo ou ganho incerto?</strong> <br>
-                    O que você prefere?`,
+                    Imagine que você investiu e verifica como esses investimentos estão indo:  <br>
+                    qual cenário você se sentiria mais confortável?`,
                 "Risk": "50% de chance de ganhar R$1.000 <br> 50% de chance de não ganhar nada",
                 "Safe": "ganho garantido de R${safe}",
                 "SafeNumber": 500
@@ -33,7 +34,8 @@
         "etapa2":
             {
                 "Text":`<strong> Escolha o seu cenário: tudo ou nada? </strong> <br>
-                        O que você prefere?`,
+                        Imagine que você investiu e verifica como esses investimentos estão indo: <br>
+                        Qual cenário você se sentiria mais confortável?`,
                 "Risk": " 50% de chance de ganhar R$1.000 <br> 50% de chance de perder R${risk}",
                 "Safe": "não ganhar ou perder nada",
                 "RiskNumber": 1000
@@ -41,7 +43,8 @@
         "etapa3":
             {
                 "Text":`<strong>Escolha o seu cenário: perda certa ou perda incerto?</strong> <br>
-                O que você prefere?`,
+                Imagine que você investiu e verifica como esses investimentos estão indo: <br>
+                qual cenário você se sentiria mais confortável?`,
                 "Risk": "50% de chance de não ganhar nem perder <br> 50% de chance de perder {risk}",
                 "Safe": "perda garantida de {safe}",
                 "RiskNumber": 440,
@@ -103,13 +106,13 @@
         text_question.innerHTML = window.questions[window.stage].Text
 
         if (window.stage === "etapa1"){
-            let textoRisk = `<strong>Alternativa B</strong> <br>
-                           <strong>50%</strong> chance de ganhar<br>
-                          <strong>50%</strong> chance de não ter ganho`
+            let textoRisk = `<strong>Alternativa B</strong> <br></br>
+                           <strong>50%</strong> chance de ganhar<br></br>
+                          <strong>50%</strong> chance de não ter ganho<br></br>`
             let elemento_textoRisk = document.createElement('p')
             elemento_textoRisk.innerHTML = textoRisk
 
-            let textoSafe = "<strong>Alternativa A</strong><br>Ganho<strong> com certeza</strong> <br> ‎"
+            let textoSafe = "<strong>Alternativa A</strong><br></br><br></br>Ganho<strong> com certeza</strong> <br></br> ‎"
             let elemento_textoSafe = document.createElement('p')
             elemento_textoSafe.innerHTML = textoSafe
 
@@ -123,13 +126,13 @@
             alternativaSafe.appendChild(divCircleSafe)
 
         } else if (window.stage === "etapa2"){
-            let textoRisk = `<strong>Alternativa B</strong> <br>
-                           <strong>50%</strong> chance de ganhar<br>
-                          <strong>50%</strong> chance de perder`
+            let textoRisk = `<strong>Alternativa B</strong> <br></br>
+                           <strong>50%</strong> chance de ganhar<br></br>
+                          <strong>50%</strong> chance de perder<br></br>`
             let elemento_textoRisk = document.createElement('p')
             elemento_textoRisk.innerHTML = textoRisk
 
-            let textoSafe = "<strong>Alternativa A</strong><br>Sem ganho ou perda <br> <strong> com certeza</strong>"
+            let textoSafe = "<strong>Alternativa A</strong><br></br></br>Sem ganho ou perda <br> <strong> com certeza</strong><br></br>"
             let elemento_textoSafe = document.createElement('p')
             elemento_textoSafe.innerHTML = textoSafe
 
@@ -143,13 +146,13 @@
             alternativaSafe.appendChild(divCircleSafe)
 
         } else if (window.stage === "etapa3") {
-            let textoRisk = `<strong>Alternativa B</strong> <br>
-                           <strong>50%</strong> chance de perder<br>
-                          <strong>50%</strong> chance de não perder`
+            let textoRisk = `<strong>Alternativa B</strong> <br></br>
+                           <strong>50%</strong> chance de perder<br></br>
+                          <strong>50%</strong> chance de não perder<br></br>`
             let elemento_textoRisk = document.createElement('p')
             elemento_textoRisk.innerHTML = textoRisk
 
-            let textoSafe = "<strong>Alternativa A</strong><br>Perda <strong>com certeza</strong> <br> ‎"
+            let textoSafe = "<strong>Alternativa A</strong><br></br><br></br>Perda <strong>com certeza</strong> <br></br> ‎"
             let elemento_textoSafe = document.createElement('p')
             elemento_textoSafe.innerHTML = textoSafe
 

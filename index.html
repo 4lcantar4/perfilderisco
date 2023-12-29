@@ -10,14 +10,18 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="heading"> QUIZ-Qual é o seu perfil de investidor? </h1>
-        <div class="start-screen">
+        <h1 class="heading">QUIZ-Qual é o seu perfil de investidor?</h1>
+        <div class="divider"></div>
+        <div class="intro-section">
+            <p class="intro-text">Você sabe como suas emoções, metas e disposição para correr riscos podem te ajudar a escolher os investimentos mais adequados para você? <b>Participe da nossa pesquisa e dê o primeiro passo para descobrir!</b></p>
+            <button class="btn" id="start-quiz">Começar o Quiz</button>
+        </div>
+        <div class="start-screen" style="display:none;">
             <p class="index_text">
-                Responda a algumas perguntas e saiba como suas emoções, metas e disposição para correr riscos podem te ajudar a escolher os investimentos mais adequados para você.<br>
+                Para participar da pesquisa, leia atentamente o Termo de Consentimento Livre e Esclarecido e, no final da página, marque a caixa.<br>
             </p>
             <embed class="pdf-container" src="./TCLE.pdf" width="50%" height="500px" type="application/pdf"/>
             <ul><input type="radio" onclick="location.href='instructions.html';" id="startbutton">Eu li o Termo de Consentimento Livre e Esclarecido da pesquisa e concordo em participar voluntariamente.</ul>
-            
         </div>
     </div>
     <script type="text/javascript">
@@ -26,6 +30,12 @@
             localStorage.clear();
             localStorage.setItem('versao', versaoAtual);
         }
+
+        document.getElementById('start-quiz').addEventListener('click', function() {
+            document.querySelector('.intro-section').style.display = 'none';
+            document.querySelector('.start-screen').style.display = 'block';
+        });
     </script>
 </body>
 </html>
+
