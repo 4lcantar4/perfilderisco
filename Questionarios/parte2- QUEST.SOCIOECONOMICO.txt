@@ -1,11 +1,10 @@
-Condicional	Identificacao	Pergunta	Tipo de Resposta	Alternativa 1	Alternativa 2	Alternativa 3	Alternativa 4	Alternativa 5	Alternativa 6	Alternativa 7
-	QS1	Qual seu nome?	S1	-	-	-	-	-	-	-
-	QS2A	Quais das seguintes alternativas descreve melhor a forma como vocï¿½ se identifica hoje?	A4	Mulher	Homem	Queer, nï¿½o-binï¿½rio ou gï¿½nero fluido	Prefiro me autodescrever	-	-	-
-"window.resposta['QS2A'] == ""4"""	QS2B	Eu me identifico como: 	S1	-	-	-	-	-	-	-
-	QS3A	Sobre sua situaÃ§Ã£o financeira, qual das seguintes opï¿½ï¿½es melhor descreve seu cenï¿½rio atual?	A3	Dependo de outras fontes de renda (pais, tios, etc.) e nï¿½o tenho dependentes financeiros	Minha renda cobre todos os meus gastos e tenho dependentes financeiros	Minha renda cobre todos os meus gastos e nï¿½o tenho dependentes financeiros	-	-	-	-
-"window.resposta['QS3A'] == ""2"""	QS3B	Quantos dependentes financeiros?	I1	-	-	-	-	-	-	-
-	QS4	Qual ï¿½ o seu estado civil?	A5	Solteiro(a)	Casado(a)	Separado(a)	Divorciado(a)	Viï¿½vo(a)	-	-
-	QS5	Qual faixa de renda mensal melhor representa sua situaï¿½ï¿½o financeira atual?	A6	Atï¿½ 1 salï¿½rio mï¿½nimo (atï¿½ R$ 1.320,00)	De 1 a 2 salï¿½rios mï¿½nimos (de R$ 1.321,00 atï¿½ R$ 2.640,00)	De 2 a 5 salï¿½rios mï¿½nimos (de R$ 2.641,00 atï¿½ R$ 6.600,00)	De 5 a 10 salï¿½rios mï¿½nimos (de R$ 6.601,00 atï¿½ R$ 13.200,00)	De 10 a 30 salï¿½rios mï¿½nimos (de R$ 13.201,00 atï¿½ R$ 39.600,00)	Mais de 30 salï¿½rios mï¿½nimos (mais de R$ 39.600,00)	-
-	QS6	Qual ï¿½ o maior nï¿½vel de educaï¿½ï¿½o que vocï¿½ concluiu?	A4	Ensino Fundamental	Ensino Mï¿½dio	Graduaï¿½ï¿½o	Pï¿½s-Graduaï¿½ï¿½o	-	-	-
-	QS7	Qual ï¿½ a sua idade atual em anos?	I1	-	-	-	-	-	-	-
-	QS8	Vocï¿½ trabalha/trabalhou em alguma posiï¿½ï¿½o diretamente relacionada ao mercado financeiro (agente autï¿½nomo, gestor de carteira, analista, acadï¿½mico de finanï¿½as, etc.)?	A2	Sim	Nï¿½o	-	-	-	-	-
+Condicional	Identificacao	Pergunta	Tipo de Resposta	Alternativa 1	Alternativa 2	Alternativa 3	Alternativa 4	Alternativa 5	Alternativa 6	Alternativa 7																	
+	1	Qual seu nome?	S1	-	-	-	-	-	-	-																	
+	2A	Quais das seguintes alternativas descreve melhor a forma como você se identifica hoje?	A4	Mulher	Homem	Queer, não-binário ou gênero fluido	Prefiro me autodescrever	-	-	-																	
+"window.resposta['2A'] == ""4"""	2B	Eu me identifico como: 	S1	-	-	-	-	-	-	-																	
+	3A	Você tem renda própria que cobre todos os seus gastos?	A2	Sim, minha renda cobre todos os meus gastos	Não, dependo de outras fontes de renda (pais, tios, etc.)	-	-	-	-	-																	
+"window.resposta['3A'] == ""1"""	3B	Você tem dependentes financeiros (filhos, pais, etc.)?	A2	Sim, tenho dependentes financeiros	Não, não tenho dependentes financeiros		-	-	-	-																	
+"window.resposta['3B'] == ""1"""	3C	Quantos dependentes financeiros?	I1	-	-	-	-	-	-	-																	
+	4	Em relação aos seus gastos de forma geral, qual faixa melhor descreve sua situação financeira mensal?	A6	Até 1 salário mínimo (até R$ 1.320,00)	De 1 a 2 salários mínimos (de R$ 1.321,00 até R$ 2.640,00)	De 2 a 5 salários mínimos (de R$ 2.641,00 até R$ 6.600,00)	De 5 a 10 salários mínimos (de R$ 6.601,00 até R$ 13.200,00)	De 10 a 30 salários mínimos (de R$ 13.201,00 até R$ 39.600,00)	Mais de 30 salários mínimos (mais de R$ 39.600,00)	-																	
+	5	Qual é o maior nível de educação que você concluiu ou esta em?	A4	Ensino Fundamental	Ensino Médio	Graduação	Pós-Graduação	-	-	-																	
+	6	Qual é a sua idade atual em anos?	I1	-	-	-	-	-	-	-																	
