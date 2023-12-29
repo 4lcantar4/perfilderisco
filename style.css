@@ -53,7 +53,7 @@ div.main {
 div.element {
     width: 85%;
     padding: 16pt;
-    background-color: #ce1313;
+    background-color: #ffffff;
     box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #ffffff;
     border-radius: 16px;
     margin: auto;
@@ -75,22 +75,6 @@ p.value-description {
     margin-left: 20pt;
 }
 
-p.question {
-    margin: 16pt auto;
-    color: #333333;
-    font-family: 'Poppins', sans-serif;
-    font-weight: normal;
-    width: 60%;
-    min-width: 300pt;
-    min-height: 80pt;
-    padding: 16pt;
-    border-radius: 16pt;
-    font-size: 18pt;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: justify;
-}
 
 p.ideodesc {
     font-family: 'Poppins', sans-serif;
@@ -154,9 +138,8 @@ img.center {
     min-width: 400pt;
 }
 
-.button {
-    background-color: #FF6600;
-    width: 100%; /* Faz o botão ter o tamanho total do container */
+.button{
+    background-color: #fff;
     padding: 10px 20px; /* Espaçamento interno */
   border: none;
     border-radius: 5px;
@@ -166,11 +149,34 @@ img.center {
     transition: 0.3s linear;
     margin: 20px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: center;
     bottom: 0; /* Na parte inferior */
     left: 0; /* Alinhado à esquerda */
   }
+
+  .button.Selected{
+    background-color: #FF6600;
+    padding: 10px 20px; /* Espaçamento interno */
+  border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20 px;
+    font-weight: 500;
+    transition: 0.3s linear;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    bottom: 0; /* Na parte inferior */
+    left: 0; /* Alinhado à esquerda */
+  }
+  
+  .button.Selected:after {
+    content: "❭";
+    /* Estilo para a seta, se necessário */
+  }
+  
 
 .small_button {
     background-color: #73b7dc;
@@ -483,9 +489,7 @@ li.nav a:hover:not(.active), #navres a:hover {
     margin: 10px;
 }
 
-#alternativasCircle .Selected, #alternativas .Selected{
-    border: 3px solid black
-}
+
 
 
 @media (max-width: 900px), (-webkit-min-device-pixel-ratio: 2){
@@ -530,6 +534,7 @@ li.nav a:hover:not(.active), #navres a:hover {
         width: auto;
         font-size: 35px;
         text-align: justify;
+        line-height: 1.5;
     }
 
     .small_button{
