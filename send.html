@@ -1,89 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QUIZ - Qual é o seu perfil de investidor?</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link rel="stylesheet" href="style-instructions.css" />
-    <title>QUIZ-Qual é o seu perfil de investidor?</title>
+    <link rel="stylesheet" href="stylesend.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-      <div class="container">
-        <br><br>
-        <h1 class="heading"> Resultados do Quiz</h1>
-        <hr>
-        <br>
-         <div class="start-screen">
-         <p class="question" style="display: flex;flex-direction: column" id="mensagem">
-            Obrigado por participar!
-           <br><br/>
-            Aguarde alguns instantes estamos salvando as respostas e calculando seu resultado!
-        </p>
-    <br><br/>
-        <!-- Spinner de carregamento -->
-        <div class="loader" id="spinner"></div>
-        <br>
-       <div>
-        <button class="quit" id="restartbutton" style="display: none;">Reenviar</button>
-        <a class="btn" href="https://sites.google.com/view/seuperfildeinvestidor/" style="margin-top: 10px; display: none;" id="verPerfisButton">Ver os perfis de aversão à perda</a>
+    <div class="container">
+        <h1 class="heading">Resultados do Quiz</h1>
+        <div class="start-screen">
+            <p class="question" id="mensagem">
+                Obrigado por participar! Aguarde alguns instantes, estamos salvando as respostas e calculando seu resultado!
+            </p>
+            <div class="loader" id="spinner"></div>
+            <button class="quit" id="restartbutton" style="display: none;">Reenviar</button>
+            <a class="btn" href="https://sites.google.com/view/seuperfildeinvestidor/" id="verPerfisButton" style="display: none;">Ver os perfis de aversão à perda</a>
+        </div>
+
+        <div class="swiper-container" style="display: none;" id="swiperContainer">
+            <div class="swiper-wrapper">
+                <!-- Slide: Perfil Aventureiro -->
+                <div class="swiper-slide">
+                    <div class="title">Perfil: Aventureiro</div>
+                    <div class="description">
+                        Busca emoção no mercado e está disposto a assumir riscos elevados em busca de ganhos expressivos. O investidor aventureiro é movido pela busca incessante de oportunidades ousadas, priorizando retornos extraordinários em detrimento do medo de perdas significativas.
+                    </div>
+                    <div class="lambda">Intervalo de λ: 0 < λ < 0,5</div>
+                </div>
+        
+                <!-- Slide: Perfil Arrojado -->
+                <div class="swiper-slide">
+                    <div class="title">Perfil: Arrojado</div>
+                    <div class="description">
+                        Disposto a correr riscos consideráveis para buscar ganhos expressivos, mantendo alguma cautela. Busca uma rentabilidade atraente e valoriza a diversificação da carteira.
+                    </div>
+                    <div class="lambda">Intervalo de λ: 0,5 ≤ λ < 1</div>
+                </div>
+        
+                <!-- Slide: Perfil Moderado -->
+                <div class="swiper-slide">
+                    <div class="title">Perfil: Moderado</div>
+                    <div class="description">
+                        Equilíbrio entre risco e retorno, disposto a correr riscos moderados, buscando uma boa rentabilidade e valorizando a diversificação da carteira.
+                    </div>
+                    <div class="lambda">Intervalo de λ: 1 ≤ λ < 1,75</div>
+                </div>
+        
+                <!-- Slide: Perfil Equilibrado -->
+                <div class="swiper-slide">
+                    <div class="title">Perfil: Equilibrado</div>
+                    <div class="description">
+                        Prefere um equilíbrio razoável entre rentabilidade e segurança, aberto a riscos moderados e adaptando estratégias de acordo com o mercado.
+                    </div>
+                    <div class="lambda">Intervalo de λ: 1,75 ≤ λ < 2,5</div>
+                </div>
+        
+                <!-- Slide: Perfil Conservador -->
+                <div class="swiper-slide">
+                    <div class="title">Perfil: Conservador</div>
+                    <div class="description">
+                        Prioriza a proteção do capital, disposto a correr riscos baixos para obter ganhos, valorizando investimentos de baixo risco e média liquidez.
+                    </div>
+                    <div class="lambda">Intervalo de λ: 2,5 ≤ λ < 4</div>
+                </div>
+        
+                <!-- Slide: Perfil Cauteloso -->
+                <div class="swiper-slide">
+                    <div class="title">Perfil: Cauteloso</div>
+                    <div class="description">
+                        Preocupa-se principalmente com a segurança, evitando riscos de perda a todo custo, optando por investimentos de renda fixa com garantias sólidas.
+                    </div>
+                    <div class="lambda">Intervalo de λ: λ ≥ 4</div>
+                </div>
+            </div>
+        
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
     </div>
 
-
     <script type="text/javascript">
-        // Evento para o botão de reenvio
         document.getElementById("restartbutton").addEventListener("click", function() {
-            document.getElementById("restartbutton").style.display = "none";
+            this.style.display = "none";
             sendInformation();
         });
 
-        // Função para enviar as informações
         function sendInformation() {
-            let data = {};
-            data.SocioEconomics = JSON.parse(localStorage.SocioEconomics);
-            data.RiskAverssion = JSON.parse(localStorage.RiskAverssion);
-            data.Quiz = JSON.parse(localStorage.Quiz);
+            let data = {
+                SocioEconomics: JSON.parse(localStorage.getItem("SocioEconomics") || '{}'),
+                RiskAverssion: JSON.parse(localStorage.getItem("RiskAverssion") || '{}'),
+                Quiz: JSON.parse(localStorage.getItem("Quiz") || '{}')
+            };
 
             let jsonData = JSON.stringify(data);
             let encodedData = encodeURIComponent(jsonData);
-
             let url = `https://script.google.com/macros/s/AKfycby7vlwGMpMw36HLgxlYpsP4C7g0GK5a2rVUHdUeyNDGzlYGSzv6zlXLmx0vVpor3hI3tQ/exec?data=${encodedData}`;
 
-            fetch(url, {
-                method: "GET"
-            }).then(response => {
-                sucessoNoEnvio();
-            }).catch(error => {
-                falhaNoEnvio();
-            });
+            fetch(url)
+                .then(response => response.ok ? sucessoNoEnvio() : falhaNoEnvio())
+                .catch(falhaNoEnvio);
         }
 
-        // Função para lidar com sucesso no envio
         function sucessoNoEnvio() {
             document.getElementById("spinner").style.display = "none";
             calcularEExibirCoeficiente();
             document.getElementById("verPerfisButton").style.display = "block";
         }
 
-        // Função para lidar com falha no envio
         function falhaNoEnvio() {
             document.getElementById("spinner").style.display = "none";
             document.getElementById("mensagem").textContent = "Ops..algo deu errado, clique no botão abaixo";
             document.getElementById("restartbutton").style.display = "block";
         }
 
-        // Função para calcular e exibir o coeficiente
         function calcularEExibirCoeficiente() {
-            if (localStorage.Quiz) {
-                const quiz = JSON.parse(localStorage.Quiz);
+            if (localStorage.getItem("Quiz")) {
+                const quiz = JSON.parse(localStorage.getItem("Quiz"));
                 const coeficiente = quiz.etapa1 / quiz.etapa3;
-                document.querySelector('#mensagem').textContent = "Seu coeficiente de aversão: " + coeficiente.toFixed(2);
+                document.getElementById('mensagem').textContent = "Seu coeficiente de aversão: " + coeficiente.toFixed(2);
+                initializeSwiper();
             }
         }
+// Função de inicialização do Swiper
+function initializeSwiper() {
+    document.getElementById("swiperContainer").style.display = "block";
+    
+    const profiles = [
+        {
+            title: "Perfil: Aventureiro",
+            description: "Busca emoção no mercado e está disposto a assumir riscos elevados em busca de ganhos expressivos. O investidor aventureiro é movido pela busca incessante de oportunidades ousadas, priorizando retornos extraordinários em detrimento do medo de perdas significativas.",
+            lambda: "Intervalo de λ: 0 < λ < 0,5"
+        },
+        {
+            title: "Perfil: Arrojado",
+            description: "Disposto a correr riscos consideráveis para buscar ganhos expressivos, mantendo alguma cautela. Busca uma rentabilidade atraente e valoriza a diversificação da carteira.",
+            lambda: "Intervalo de λ: 0,5 ≤ λ < 1"
+        },
+        {
+            title: "Perfil: Moderado",
+            description: "Equilíbrio entre risco e retorno, disposto a correr riscos moderados, buscando uma boa rentabilidade e valorizando a diversificação da carteira.",
+            lambda: "Intervalo de λ: 1 ≤ λ < 1,75"
+        },
+        {
+            title: "Perfil: Equilibrado",
+            description: "Prefere um equilíbrio razoável entre rentabilidade e segurança, aberto a riscos moderados e adaptando estratégias de acordo com o mercado.",
+            lambda: "Intervalo de λ: 1,75 ≤ λ < 2,5"
+        },
+        {
+            title: "Perfil: Conservador",
+            description: "Prioriza a proteção do capital, disposto a correr riscos baixos para obter ganhos, valorizando investimentos de baixo risco e média liquidez.",
+            lambda: "Intervalo de λ: 2,5 ≤ λ < 4"
+        },
+        {
+            title: "Perfil: Cauteloso",
+            description: "Preocupa-se principalmente com a segurança, evitando riscos de perda a todo custo, optando por investimentos de renda fixa com garantias sólidas.",
+            lambda: "Intervalo de λ: λ ≥ 4"
+        }
+    ];
 
-        // Inicializa o envio das informações
+    new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+    const swiperWrapper = document.querySelector('.swiper-wrapper');
+    profiles.forEach(profile => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `
+            <div class="title">${profile.title}</div>
+            <div class="description">${profile.description}</div>
+            <div class="lambda">${profile.lambda}</div>
+        `;
+        swiperWrapper.appendChild(slide);
+    });
+}
+
         sendInformation();
     </script>
 </body>
 </html>
-
