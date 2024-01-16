@@ -233,7 +233,11 @@
         } else{
             window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber * 1.5
         }
-        if(window.questions.etapa1.SafeNumber <= 5 || window.questions.etapa1.SafeNumber >= 5000){
+        if(window.questions.etapa1.SafeNumber <= 5 ){
+            window.questions.etapa1.SafeNumber = 5
+            processo_etapa1(true, selecionado)
+        } else if(window.questions.etapa1.SafeNumber >= 5000){
+            window.questions.etapa1.SafeNumber = 5000
             processo_etapa1(true, selecionado)
         }
         window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5)
@@ -258,7 +262,11 @@
         } else{
             window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber * 1.5
         }
-        if(window.questions.etapa2.RiskNumber <= 5 || window.questions.etapa2.RiskNumber >= 5000){
+        if(window.questions.etapa2.RiskNumber <= 5 ){
+            window.questions.etapa2.RiskNumber = 5
+            processo_etapa2(true, selecionado)
+        } else if(window.questions.etapa2.RiskNumber >= 5000){
+            window.questions.etapa2.RiskNumber = 5000
             processo_etapa2(true, selecionado)
         }
         window.questions.etapa2.RiskNumber =  arredondar_multiplo(window.questions.etapa2.RiskNumber, 5)
@@ -281,7 +289,11 @@
         } else{
             window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber * 1.5
         }
-        if(window.questions.etapa3.SafeNumber <= 5 || window.questions.etapa3.SafeNumber >= 5000){
+         if(window.questions.etapa3.SafeNumber <= 5 ){
+            window.questions.etapa3.SafeNumber = 5
+            processo_etapa3(true, selecionado)
+        } else if(window.questions.etapa3.SafeNumber >= 5000){
+            window.questions.etapa3.SafeNumber = 5000
             processo_etapa3(true, selecionado)
         }
         window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5)
