@@ -20,9 +20,6 @@
 </div>
 <!-- JavaScript for the test itself -->
 <script>
- const VALOR_MAXIMO = 5000;
-    const VALOR_MINIMO = 5;
-
     var questions = {
         "etapa1": 
             {
@@ -220,82 +217,88 @@
         return(Math.round(valor / multiple) * multiple)
     }
 
-    function processo_etapa1(houve_torcao, selecionado) {
-        if (houve_torcao) {
-            var conversor = { "etapa1": "etapa2", "etapa2": "etapa3" };
-            let ultimo_numero = window.questions.etapa1.SafeNumber;
-            let ultima_movimentacao = window.respostas.etapa1[window.respostas.etapa1.length - 1];
-            window.stage = conversor[window.stage];
-            var multi = { "Safe": 5 / 6, "Risk": 1.5 };
-            window.respostas.etapa1 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
-            showQuestion();
-            return '';
-        }
-        if (selecionado == "Safe") {
-            window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber / 2;
-        } else {
-            window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber * 1.5;
-        }
-        window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5);
+    // ... (código anterior)
 
-        if (window.questions.etapa1.SafeNumber >= VALOR_MAXIMO || window.questions.etapa1.SafeNumber <= VALOR_MINIMO) {
-            window.stage = "etapa2"; // Avançar para a próxima etapa
-        }
+function processo_etapa1(houve_torcao, selecionado) {
+    const minValue = 10;
+    const maxValue = 5000;
 
+    if (houve_torcao || window.questions.etapa1.SafeNumber >= maxValue || window.questions.etapa1.SafeNumber <= minValue) {
+        // Salvar como torção e avançar para a próxima etapa
+        var conversor = {"etapa1": "etapa2", "etapa2": "etapa3"};
+        let ultima_movimentacao = window.respostas.etapa1[window.respostas.etapa1.length - 1];
+        window.stage = conversor[window.stage];
+        var multi = {"Safe": 5/6, "Risk": 1.5};
+        window.respostas.etapa1 = arredondar_multiplo(multi[ultima_movimentacao] * maxValue, 5);
         showQuestion();
+        return;
     }
 
-    function processo_etapa2(houve_torcao, selecionado) {
-    if (houve_torcao) {
-        var conversor = { "etapa1": "etapa2", "etapa2": "etapa3" };
+    if (selecionado == "Safe") {
+        window.questions.etapa1.SafeNumber = Math.max(window.questions.etapa1.SafeNumber / 2, minValue);
+    } else {
+        window.questions.etapa1.SafeNumber = Math.min(window.questions.etapa1.SafeNumber * 1.5, maxValue);
+    }
+    window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5);
+    showQuestion();
+}
+
+function processo_etapa2(houve_torcao, selecionado) {
+    const minValue = 10;
+    const maxValue = 5000;
+
+    if (houve_torcao || window.questions.etapa2.RiskNumber >= maxValue || window.questions.etapa2.RiskNumber <= minValue) {
+        // Salvar como torção e avançar para a próxima etapa
+        var conversor = {"etapa1": "etapa2", "etapa2": "etapa3"};
         let ultimo_numero = window.questions.etapa2.RiskNumber;
         let ultima_movimentacao = window.respostas.etapa2[window.respostas.etapa2.length - 1];
-        var multi = { "Safe": 5 / 6, "Risk": 1.5 };
+        var multi = {"Safe": 5/6, "Risk": 1.5};
         window.respostas.etapa2 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
         window.stage = conversor[window.stage];
         window.questions.etapa3.RiskNumber = arredondar_multiplo(window.respostas.etapa2, 10);
         window.questions.etapa3.SafeNumber = window.questions.etapa3.RiskNumber / 2;
         showQuestion();
-        return '';
+        return;
     }
+
     if (selecionado == "Safe") {
-        window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber / 2;
+        window.questions.etapa2.RiskNumber = Math.max(window.questions.etapa2.RiskNumber / 2, minValue);
     } else {
-        window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber * 1.5;
+        window.questions.etapa2.RiskNumber = Math.min(window.questions.etapa2.RiskNumber * 1.5, maxValue);
     }
     window.questions.etapa2.RiskNumber = arredondar_multiplo(window.questions.etapa2.RiskNumber, 5);
-
-    if (window.questions.etapa2.RiskNumber >= VALOR_MAXIMO || window.questions.etapa2.RiskNumber <= VALOR_MINIMO) {
-        window.stage = "etapa3"; // Avançar para a próxima etapa
-    }
-
     showQuestion();
 }
 
 function processo_etapa3(houve_torcao, selecionado) {
-    if (houve_torcao) {
-        var conversor = { "etapa1": "etapa2", "etapa2": "etapa3", "etapa3": "final" };
+    const minValue = 10;
+    const maxValue = 5000;
+
+    if (houve_torcao || window.questions.etapa3.SafeNumber >= maxValue || window.questions.etapa3.SafeNumber <= minValue) {
+        // Salvar como torção e avançar para a próxima etapa
+        var conversor = {"etapa1": "etapa2", "etapa2": "etapa3", "etapa3": "final"};
         let ultimo_numero = window.questions.etapa3.SafeNumber;
         let ultima_movimentacao = window.respostas.etapa3[window.respostas.etapa3.length - 1];
-        var multi = { "Risk": 5 / 6, "Safe": 1.5 };
+        var multi = {"Risk": 5/6, "Safe": 1.5};
         window.respostas.etapa3 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10);
         window.stage = conversor[window.stage];
         end();
-        return '';
+        return;
     }
+
     if (selecionado == "Risk") {
-        window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber / 2;
+        window.questions.etapa3.SafeNumber = Math.min(window.questions.etapa3.SafeNumber * 1.5, maxValue);
     } else {
-        window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber * 1.5;
+        window.questions.etapa3.SafeNumber = Math.max(window.questions.etapa3.SafeNumber / 2, minValue);
     }
     window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5);
-
-    if (window.questions.etapa3.SafeNumber >= VALOR_MAXIMO || window.questions.etapa3.SafeNumber <= VALOR_MINIMO) {
-        window.stage = "final"; // Avançar para a etapa final
-    }
-
     showQuestion();
 }
+
+// ... (código posterior)
+
+
+
     function end(_){
         delete(window.respostas.final)
         localStorage.setItem("Quiz", JSON.stringify(window.respostas))
