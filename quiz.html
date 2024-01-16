@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link href='style.css' rel='stylesheet' type='text/css'>
+    <link href='stylequiz.css' rel='stylesheet' type='text/css'>
     <title data-i18n="title-quiz">QUIZ-Qual é o seu perfil de investidor?</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="utf-8">
@@ -20,11 +20,15 @@
 </div>
 <!-- JavaScript for the test itself -->
 <script>
+ const VALOR_MAXIMO = 5000;
+    const VALOR_MINIMO = 5;
+
     var questions = {
         "etapa1": 
             {
                 "Text":`<strong>Escolha o seu cenário: ganho certo ou ganho incerto?</strong> <br>
-                    O que você prefere?`,
+                    Imagine que você investiu e verifica como esses investimentos estão indo:  <br>
+                    qual cenário você se sentiria mais confortável?`,
                 "Risk": "50% de chance de ganhar R$1.000 <br> 50% de chance de não ganhar nada",
                 "Safe": "ganho garantido de R${safe}",
                 "SafeNumber": 500
@@ -33,7 +37,8 @@
         "etapa2":
             {
                 "Text":`<strong> Escolha o seu cenário: tudo ou nada? </strong> <br>
-                        O que você prefere?`,
+                        Imagine que você investiu e verifica como esses investimentos estão indo: <br>
+                        Qual cenário você se sentiria mais confortável?`,
                 "Risk": " 50% de chance de ganhar R$1.000 <br> 50% de chance de perder R${risk}",
                 "Safe": "não ganhar ou perder nada",
                 "RiskNumber": 1000
@@ -41,7 +46,8 @@
         "etapa3":
             {
                 "Text":`<strong>Escolha o seu cenário: perda certa ou perda incerto?</strong> <br>
-                O que você prefere?`,
+                Imagine que você investiu e verifica como esses investimentos estão indo: <br>
+                qual cenário você se sentiria mais confortável?`,
                 "Risk": "50% de chance de não ganhar nem perder <br> 50% de chance de perder {risk}",
                 "Safe": "perda garantida de {safe}",
                 "RiskNumber": 440,
@@ -50,7 +56,6 @@
     var stage = "etapa1"
     var respostas = {};
 
-   
     function buildCircle(colorLeft, textLeft, colorRight = '', textRight = ''){
         if(colorRight) {
             const divCircleRisk = document.createElement("div");
@@ -215,67 +220,82 @@
         return(Math.round(valor / multiple) * multiple)
     }
 
-    function processo_etapa1(houve_torcao, selecionado){
-        if(houve_torcao){
-                var conversor = {"etapa1":"etapa2","etapa2":"etapa3"}
-                let ultimo_numero = window.questions.etapa1.SafeNumber
-                let ultima_movimentacao = window.respostas.etapa1[window.respostas.etapa1.length - 1]
-                window.stage = conversor[window.stage]
-                var multi = {"Safe": 5/6, "Risk":1.5}
-                window.respostas.etapa1 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5)
-                showQuestion()
-                return ''
-            }
-        if(selecionado == "Safe"){
-            window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber / 2
-        } else{
-            window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber * 1.5
+    function processo_etapa1(houve_torcao, selecionado) {
+        if (houve_torcao) {
+            var conversor = { "etapa1": "etapa2", "etapa2": "etapa3" };
+            let ultimo_numero = window.questions.etapa1.SafeNumber;
+            let ultima_movimentacao = window.respostas.etapa1[window.respostas.etapa1.length - 1];
+            window.stage = conversor[window.stage];
+            var multi = { "Safe": 5 / 6, "Risk": 1.5 };
+            window.respostas.etapa1 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
+            showQuestion();
+            return '';
         }
-        window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5)
-        showQuestion()
+        if (selecionado == "Safe") {
+            window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber / 2;
+        } else {
+            window.questions.etapa1.SafeNumber = window.questions.etapa1.SafeNumber * 1.5;
+        }
+        window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5);
+
+        if (window.questions.etapa1.SafeNumber >= VALOR_MAXIMO || window.questions.etapa1.SafeNumber <= VALOR_MINIMO) {
+            window.stage = "etapa2"; // Avançar para a próxima etapa
+        }
+
+        showQuestion();
     }
 
-    function processo_etapa2(houve_torcao, selecionado){  
-        if(houve_torcao){
-            var conversor = {"etapa1":"etapa2","etapa2":"etapa3"}
-            let ultimo_numero = window.questions.etapa2.RiskNumber
-            let ultima_movimentacao = window.respostas.etapa2[window.respostas.etapa2.length - 1]
-            var multi = {"Safe": 5/6, "Risk": 1.5}
-            window.respostas.etapa2 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5)
-            window.stage = conversor[window.stage]
-            window.questions.etapa3.RiskNumber = arredondar_multiplo(window.respostas.etapa2, 10)
-            window.questions.etapa3.SafeNumber = window.questions.etapa3.RiskNumber / 2
-            showQuestion()
-            return ''
-        }
-        if(selecionado == "Safe"){
-            window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber / 2
-        } else{
-            window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber * 1.5
-        }
-        window.questions.etapa2.RiskNumber =  arredondar_multiplo(window.questions.etapa2.RiskNumber, 5)
-        showQuestion()
+    function processo_etapa2(houve_torcao, selecionado) {
+    if (houve_torcao) {
+        var conversor = { "etapa1": "etapa2", "etapa2": "etapa3" };
+        let ultimo_numero = window.questions.etapa2.RiskNumber;
+        let ultima_movimentacao = window.respostas.etapa2[window.respostas.etapa2.length - 1];
+        var multi = { "Safe": 5 / 6, "Risk": 1.5 };
+        window.respostas.etapa2 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
+        window.stage = conversor[window.stage];
+        window.questions.etapa3.RiskNumber = arredondar_multiplo(window.respostas.etapa2, 10);
+        window.questions.etapa3.SafeNumber = window.questions.etapa3.RiskNumber / 2;
+        showQuestion();
+        return '';
+    }
+    if (selecionado == "Safe") {
+        window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber / 2;
+    } else {
+        window.questions.etapa2.RiskNumber = window.questions.etapa2.RiskNumber * 1.5;
+    }
+    window.questions.etapa2.RiskNumber = arredondar_multiplo(window.questions.etapa2.RiskNumber, 5);
+
+    if (window.questions.etapa2.RiskNumber >= VALOR_MAXIMO || window.questions.etapa2.RiskNumber <= VALOR_MINIMO) {
+        window.stage = "etapa3"; // Avançar para a próxima etapa
     }
 
-    function processo_etapa3(houve_torcao, selecionado){
-        if(houve_torcao){
-            var conversor = {"etapa1":"etapa2","etapa2":"etapa3", "etapa3":"final"}
-            let ultimo_numero = window.questions.etapa3.SafeNumber
-            let ultima_movimentacao = window.respostas.etapa3[window.respostas.etapa3.length - 1]
-            var multi = {"Risk": 5/6, "Safe": 1.5}
-            window.respostas.etapa3 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10)
-            window.stage = conversor[window.stage]
-            end()
-            return ''
-        }
-        if(selecionado == "Risk"){
-            window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber / 2
-        } else{
-            window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber * 1.5
-        }
-        window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5)
-        showQuestion()
+    showQuestion();
+}
+
+function processo_etapa3(houve_torcao, selecionado) {
+    if (houve_torcao) {
+        var conversor = { "etapa1": "etapa2", "etapa2": "etapa3", "etapa3": "final" };
+        let ultimo_numero = window.questions.etapa3.SafeNumber;
+        let ultima_movimentacao = window.respostas.etapa3[window.respostas.etapa3.length - 1];
+        var multi = { "Risk": 5 / 6, "Safe": 1.5 };
+        window.respostas.etapa3 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10);
+        window.stage = conversor[window.stage];
+        end();
+        return '';
     }
+    if (selecionado == "Risk") {
+        window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber / 2;
+    } else {
+        window.questions.etapa3.SafeNumber = window.questions.etapa3.SafeNumber * 1.5;
+    }
+    window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5);
+
+    if (window.questions.etapa3.SafeNumber >= VALOR_MAXIMO || window.questions.etapa3.SafeNumber <= VALOR_MINIMO) {
+        window.stage = "final"; // Avançar para a etapa final
+    }
+
+    showQuestion();
+}
     function end(_){
         delete(window.respostas.final)
         localStorage.setItem("Quiz", JSON.stringify(window.respostas))
@@ -358,7 +378,7 @@
     <br>
     A alternativa B é como apostar em cara ou coroa em um jogo de cara ou coroa. Você tem 50% de chance de ganhar sua aposta e 50% de chance de perder sua aposta.
     <br><br>
-    ⚠️<b>ATENÇÃO: Os números irão mudar conforme você responde, e não há como voltar.`;
+    ⚠️<b>ATENÇÃO: ATENÇÃO: Os números dentro dos círculos mudarão conforme você responder, e não haverá como voltar.`;
 
     var blocoResps = document.querySelector('div[id="alternativasCircle"]');
     blocoResps.innerHTML = '';
