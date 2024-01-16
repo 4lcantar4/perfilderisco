@@ -252,6 +252,9 @@
         window.stage = conversor[window.stage];
         var multi = {"Safe": 5 / 6, "Risk": 1.5};
         window.questions.etapa3.RiskNumber = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10);
+         if(window.questions.etapa3.RiskNumber == 0)  {
+            window.questions.etapa3.RiskNumber = 10
+        }
         if(window.questions.etapa3.RiskNumber <= 10)  {
             window.questions.etapa3.RiskNumber *= 100
         }
