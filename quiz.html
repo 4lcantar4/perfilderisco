@@ -24,8 +24,7 @@
         "etapa1": 
             {
                 "Text":`<strong>Escolha o seu cenário: ganho certo ou ganho incerto?</strong> <br>
-                    Imagine que você investiu e verifica como esses investimentos estão indo:  <br>
-                    qual cenário você se sentiria mais confortável?`,
+                    O que você prefere?`,
                 "Risk": "50% de chance de ganhar R$1.000 <br> 50% de chance de não ganhar nada",
                 "Safe": "ganho garantido de R${safe}",
                 "SafeNumber": 500
@@ -34,8 +33,7 @@
         "etapa2":
             {
                 "Text":`<strong> Escolha o seu cenário: tudo ou nada? </strong> <br>
-                        Imagine que você investiu e verifica como esses investimentos estão indo: <br>
-                        Qual cenário você se sentiria mais confortável?`,
+                        O que você prefere?`,
                 "Risk": " 50% de chance de ganhar R$1.000 <br> 50% de chance de perder R${risk}",
                 "Safe": "não ganhar ou perder nada",
                 "RiskNumber": 1000
@@ -43,8 +41,7 @@
         "etapa3":
             {
                 "Text":`<strong>Escolha o seu cenário: perda certa ou perda incerto?</strong> <br>
-                Imagine que você investiu e verifica como esses investimentos estão indo: <br>
-                qual cenário você se sentiria mais confortável?`,
+                O que você prefere?`,
                 "Risk": "50% de chance de não ganhar nem perder <br> 50% de chance de perder {risk}",
                 "Safe": "perda garantida de {safe}",
                 "RiskNumber": 440,
@@ -217,99 +214,76 @@
         return(Math.round(valor / multiple) * multiple)
     }
 
-    // ... (código anterior)
-
-    function processo_etapa1(houve_torcao, selecionado) {
-    const minValue = 10;
-    const maxValue = 5000;
-
-    if (houve_torcao) {
-        var conversor = {"etapa1": "etapa2", "etapa2": "etapa3"};
+    function processo_etapa1(houve_torcao, selecionado){
+    var multi = {"Safe": 5/6, "Risk": 1.5};
+    if(houve_torcao){
+        let ultimo_numero = window.questions.etapa1.SafeNumber;
         let ultima_movimentacao = window.respostas.etapa1[window.respostas.etapa1.length - 1];
-        window.stage = conversor[window.stage];
-        var multi = {"Safe": 5/6, "Risk": 1.5};
-        window.respostas.etapa1 = arredondar_multiplo(multi[ultima_movimentacao] * maxValue, 5);
+        window.questions.etapa1.SafeNumber = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
+    } else {
+        window.questions.etapa1.SafeNumber *= multi[selecionado];
+        window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5);
+    }
+
+    // Verificar limites
+    if (window.questions.etapa1.SafeNumber >= 5000 || window.questions.etapa1.SafeNumber <= 5){
+        window.stage = "etapa2";
         showQuestion();
         return;
     }
 
-    if (selecionado == "Safe") {
-        window.questions.etapa1.SafeNumber = Math.max(window.questions.etapa1.SafeNumber / 2, minValue);
-    } else {
-        window.questions.etapa1.SafeNumber = Math.min(window.questions.etapa1.SafeNumber * 1.5, maxValue);
-    }
-
-    // Verifique se o valor atingiu o máximo ou mínimo e, se sim, salve-o como máximo ou mínimo
-    if (window.questions.etapa1.SafeNumber >= maxValue) {
-        window.questions.etapa1.SafeNumber = maxValue;
-    } else if (window.questions.etapa1.SafeNumber <= minValue) {
-        window.questions.etapa1.SafeNumber = minValue;
-    }
-
-    window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5);
     showQuestion();
 }
 
-function processo_etapa2(houve_torcao, selecionado) {
-    const minValue = 10;
-    const maxValue = 5000;
 
-    if (houve_torcao || window.questions.etapa2.RiskNumber >= maxValue || window.questions.etapa2.RiskNumber <= minValue) {
-        // Salvar como torção e avançar para a próxima etapa
-        var conversor = {"etapa1": "etapa2", "etapa2": "etapa3"};
+function processo_etapa2(houve_torcao, selecionado){
+    var multi = {"Safe": 5/6, "Risk": 1.5};
+    if(houve_torcao){
         let ultimo_numero = window.questions.etapa2.RiskNumber;
         let ultima_movimentacao = window.respostas.etapa2[window.respostas.etapa2.length - 1];
-        var multi = {"Safe": 5/6, "Risk": 1.5};
-        window.respostas.etapa2 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
-        window.stage = conversor[window.stage];
-        window.questions.etapa3.RiskNumber = arredondar_multiplo(window.respostas.etapa2, 10);
+        window.questions.etapa2.RiskNumber = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5);
+    } else {
+        window.questions.etapa2.RiskNumber *= multi[selecionado];
+        window.questions.etapa2.RiskNumber = arredondar_multiplo(window.questions.etapa2.RiskNumber, 5);
+    }
+
+    // Verificar limites
+    if (window.questions.etapa2.RiskNumber >= 5000 || window.questions.etapa2.RiskNumber <= 5){
+        window.stage = "etapa3";
+        window.questions.etapa3.RiskNumber = arredondar_multiplo(window.questions.etapa2.RiskNumber, 10);
         window.questions.etapa3.SafeNumber = window.questions.etapa3.RiskNumber / 2;
         showQuestion();
         return;
     }
 
-    if (selecionado == "Safe") {
-        window.questions.etapa2.RiskNumber = Math.max(window.questions.etapa2.RiskNumber / 2, minValue);
-    } else {
-        window.questions.etapa2.RiskNumber = Math.min(window.questions.etapa2.RiskNumber * 1.5, maxValue);
-    }
-    window.questions.etapa2.RiskNumber = arredondar_multiplo(window.questions.etapa2.RiskNumber, 5);
     showQuestion();
 }
 
-function processo_etapa3(houve_torcao, selecionado) {
-    const minValue = 10;
-    const maxValue = 5000;
 
-    if (houve_torcao || window.questions.etapa3.SafeNumber >= maxValue || window.questions.etapa3.SafeNumber <= minValue) {
-        // Salvar como torção e avançar para a próxima etapa
-        var conversor = {"etapa1": "etapa2", "etapa2": "etapa3", "etapa3": "final"};
+function processo_etapa3(houve_torcao, selecionado){
+    var multi = {"Risk": 5/6, "Safe": 1.5};
+    if(houve_torcao){
         let ultimo_numero = window.questions.etapa3.SafeNumber;
         let ultima_movimentacao = window.respostas.etapa3[window.respostas.etapa3.length - 1];
-        var multi = {"Risk": 5/6, "Safe": 1.5};
-        window.respostas.etapa3 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10);
-        window.stage = conversor[window.stage];
-        end();
-        return;
-    }
-
-    if (selecionado == "Risk") {
-        window.questions.etapa3.SafeNumber = Math.min(window.questions.etapa3.SafeNumber * 1.5, maxValue);
-    } else {
-        window.questions.etapa3.SafeNumber = Math.max(window.questions.etapa3.SafeNumber / 2, minValue);
-    }
-    window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5);
-    showQuestion();
+        window.questions.etapa3.SafeNumber = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10);
+} else {
+window.questions.etapa3.SafeNumber *= multi[selecionado];
+window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5);
+}
+// Verificar limites
+if (window.questions.etapa3.SafeNumber >= 5000 || window.questions.etapa3.SafeNumber <= 5){
+    window.stage = "final";
+    end();
+    return;
 }
 
-// ... (código posterior)
-
-
+showQuestion();
+}
 
     function end(_){
         delete(window.respostas.final)
         localStorage.setItem("Quiz", JSON.stringify(window.respostas))
-        window.location.href = "riskTolerance.html"
+        window.location.href = "Send.html"
     }
 
     function next_question(){
@@ -388,7 +362,7 @@ function processo_etapa3(houve_torcao, selecionado) {
     <br>
     A alternativa B é como apostar em cara ou coroa em um jogo de cara ou coroa. Você tem 50% de chance de ganhar sua aposta e 50% de chance de perder sua aposta.
     <br><br>
-    ⚠️<b>ATENÇÃO: ATENÇÃO: Os números dentro dos círculos mudarão conforme você responder, e não haverá como voltar.`;
+    ⚠️<b>ATENÇÃO: Os números irão mudar conforme você responde, e não há como voltar.`;
 
     var blocoResps = document.querySelector('div[id="alternativasCircle"]');
     blocoResps.innerHTML = '';
