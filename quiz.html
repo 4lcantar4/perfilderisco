@@ -219,12 +219,11 @@
 
     // ... (código anterior)
 
-function processo_etapa1(houve_torcao, selecionado) {
+    function processo_etapa1(houve_torcao, selecionado) {
     const minValue = 10;
     const maxValue = 5000;
 
-    if (houve_torcao || window.questions.etapa1.SafeNumber >= maxValue || window.questions.etapa1.SafeNumber <= minValue) {
-        // Salvar como torção e avançar para a próxima etapa
+    if (houve_torcao) {
         var conversor = {"etapa1": "etapa2", "etapa2": "etapa3"};
         let ultima_movimentacao = window.respostas.etapa1[window.respostas.etapa1.length - 1];
         window.stage = conversor[window.stage];
@@ -239,6 +238,14 @@ function processo_etapa1(houve_torcao, selecionado) {
     } else {
         window.questions.etapa1.SafeNumber = Math.min(window.questions.etapa1.SafeNumber * 1.5, maxValue);
     }
+
+    // Verifique se o valor atingiu o máximo ou mínimo e, se sim, salve-o como máximo ou mínimo
+    if (window.questions.etapa1.SafeNumber >= maxValue) {
+        window.questions.etapa1.SafeNumber = maxValue;
+    } else if (window.questions.etapa1.SafeNumber <= minValue) {
+        window.questions.etapa1.SafeNumber = minValue;
+    }
+
     window.questions.etapa1.SafeNumber = arredondar_multiplo(window.questions.etapa1.SafeNumber, 5);
     showQuestion();
 }
@@ -247,8 +254,7 @@ function processo_etapa2(houve_torcao, selecionado) {
     const minValue = 10;
     const maxValue = 5000;
 
-    if (houve_torcao || window.questions.etapa2.RiskNumber >= maxValue || window.questions.etapa2.RiskNumber <= minValue) {
-        // Salvar como torção e avançar para a próxima etapa
+    if (houve_torcao) {
         var conversor = {"etapa1": "etapa2", "etapa2": "etapa3"};
         let ultimo_numero = window.questions.etapa2.RiskNumber;
         let ultima_movimentacao = window.respostas.etapa2[window.respostas.etapa2.length - 1];
@@ -266,6 +272,14 @@ function processo_etapa2(houve_torcao, selecionado) {
     } else {
         window.questions.etapa2.RiskNumber = Math.min(window.questions.etapa2.RiskNumber * 1.5, maxValue);
     }
+
+    // Verifique se o valor atingiu o máximo ou mínimo e, se sim, salve-o como máximo ou mínimo
+    if (window.questions.etapa2.RiskNumber >= maxValue) {
+        window.questions.etapa2.RiskNumber = maxValue;
+    } else if (window.questions.etapa2.RiskNumber <= minValue) {
+        window.questions.etapa2.RiskNumber = minValue;
+    }
+
     window.questions.etapa2.RiskNumber = arredondar_multiplo(window.questions.etapa2.RiskNumber, 5);
     showQuestion();
 }
@@ -274,8 +288,7 @@ function processo_etapa3(houve_torcao, selecionado) {
     const minValue = 10;
     const maxValue = 5000;
 
-    if (houve_torcao || window.questions.etapa3.SafeNumber >= maxValue || window.questions.etapa3.SafeNumber <= minValue) {
-        // Salvar como torção e avançar para a próxima etapa
+    if (houve_torcao) {
         var conversor = {"etapa1": "etapa2", "etapa2": "etapa3", "etapa3": "final"};
         let ultimo_numero = window.questions.etapa3.SafeNumber;
         let ultima_movimentacao = window.respostas.etapa3[window.respostas.etapa3.length - 1];
@@ -291,12 +304,143 @@ function processo_etapa3(houve_torcao, selecionado) {
     } else {
         window.questions.etapa3.SafeNumber = Math.max(window.questions.etapa3.SafeNumber / 2, minValue);
     }
+
+    // Verifique se o valor atingiu o máximo ou mínimo e, se sim, salve-o como máximo ou mínimo
+    if (window.questions.etapa3.SafeNumber >= maxValue) {
+        window.questions.etapa3.SafeNumber = maxValue;
+    } else if (window.questions.etapa3.SafeNumber <= minValue) {
+        window.questions.etapa3.SafeNumber = minValue;
+    }
+
     window.questions.etapa3.SafeNumber = arredondar_multiplo(window.questions.etapa3.SafeNumber, 5);
     showQuestion();
 }
 
 // ... (código posterior)
 
+
+
+    function end(_){
+        delete(window.respostas.final)
+        localStorage.setItem("Quiz", JSON.stringify(window.respostas))
+        window.location.href = "riskTolerance.html"
+    }
+
+    function next_question(){
+        var selected = document.querySelector('.Selected');
+        if (!selected){
+            alert("Selecione uma alternativa!")
+            return ''
+        }
+        var selecionado = selected.id
+        if (window.respostas[window.stage]){
+            window.respostas[window.stage] = [...window.respostas[window.stage], selecionado]
+        } else {
+            window.respostas[window.stage] = [selecionado,]
+        }
+        // detectar torcao
+        let houve_torcao = verificarTorcao(window.respostas[window.stage])
+        var comandos = {"etapa1":processo_etapa1, "etapa2": processo_etapa2, "etapa3": processo_etapa3, "final":end}
+        comandos[window.stage](houve_torcao, selecionado)
+    }
+    function formatarEtapa(texto) {
+        const numero = texto.match(/\d+/)[0]; // Extrai o número da string
+        const etapa = texto.replace(/\d+/, ''); // Remove o número da string
+        return `${etapa} ${numero}`;
+    }
+
+    function verificaFormato(variavel) {
+        const padrao = /^[a-zA-Z]{5}\d$/; // Expressão regular para XXXXX8
+
+        return padrao.test(variavel);
+    }
+
+    function showQuestion(){
+        var questionText = document.querySelector('p[class="question"]')
+        if (verificaFormato(window.stage)) {
+            questionText.textContent = `Aparecerá 2 opções, escolha a que você prefere!`
+            plotarRespostas()
+        }
+    }
+
+    function start_questions() {
+        let selected = document.querySelector('.Selected');
+        if (!selected) {
+            alert("Selecione uma alternativa!")
+            return ''
+        }
+        let backButton = document.getElementById("back_button");
+        backButton.removeAttribute("onclick");
+        backButton.setAttribute("onclick", "next_question()");
+        showQuestion();
+    }
+    function instructionSelect(sel){
+        const risk = document.getElementById('Risk')
+        const safe = document.getElementById('Safe')
+        risk.style.removeProperty('border')
+        risk.classList.remove("Selected");
+        safe.style.removeProperty('border')
+        safe.classList.remove("Selected");
+        if (sel){
+            let selected = document.getElementById(sel);
+            selected.classList.add("Selected")
+        }
+        start_questions()
+    }
+
+    function instruction() {
+    var questionText = document.querySelector('p[class="question"]');
+    questionText.innerHTML = 
+    
+    
+    `A partir de agora, você será apresentado a duas alternativas:
+    <br><br>
+    <b>A</b> acontecerá com certeza, ou seja, com 100% de chance.
+    <br><br>
+    <b>B</b> terá dois resultados possíveis com probabilidades iguais de acontecer (50% de chance).
+    </p>
+    <br>
+    A alternativa B é como apostar em cara ou coroa em um jogo de cara ou coroa. Você tem 50% de chance de ganhar sua aposta e 50% de chance de perder sua aposta.
+    <br><br>
+    ⚠️<b>ATENÇÃO: ATENÇÃO: Os números dentro dos círculos mudarão conforme você responder, e não haverá como voltar.`;
+
+    var blocoResps = document.querySelector('div[id="alternativasCircle"]');
+    blocoResps.innerHTML = '';
+
+    var entendiButton = document.createElement("button");
+    entendiButton.className = 'button Selected'; // Adiciona a classe "Selected"
+    entendiButton.textContent = 'Entendi';
+    entendiButton.onclick = function() {
+        this.classList.add("Selected"); // Garante que a classe "Selected" esteja definida
+        start_questions(); // Inicia as questões
+    };
+
+    blocoResps.appendChild(entendiButton);
+}
+
+     function ajustarTam() {
+        let maxDimension = 0;
+        let elements = document.querySelectorAll('.AltCircle');
+
+        // Encontrar o maior elemento
+        elements.forEach(function(el) {
+            let dimension = Math.max(el.offsetWidth, el.offsetHeight);
+            if (dimension > maxDimension) {
+                maxDimension = dimension;
+            }
+        });
+
+        // Aplicar o maior tamanho a todos os elementos
+        elements.forEach(function(el) {
+            el.style.width = `${maxDimension}px`;
+            el.style.height = `${maxDimension}px`;
+        });
+    };
+
+    instruction()
+</script>
+</body>
+</html>
 
 
     function end(_){
