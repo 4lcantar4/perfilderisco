@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link href='stylequiz.css' rel='stylesheet' type='text/css'>
+    <link href='style.css' rel='stylesheet' type='text/css'>
     <title data-i18n="title-quiz">QUIZ-Qual é o seu perfil de investidor?</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="utf-8">
@@ -23,9 +23,8 @@
     var questions = {
         "etapa1": 
             {
-                "Text":`<strong>Escolha o seu cenário: ganho certo ou ganho incerto?</strong> <br>
-                    Imagine que você investiu e verifica como esses investimentos estão indo:  <br>
-                    qual cenário você se sentiria mais confortável?`,
+                "Text":`<strong>Escolha o seu cenário: ganho certo ou ganho incerto?</strong> <br> 
+                    O que você prefere?`,
                 "Risk": "50% de chance de ganhar R$1.000 <br> 50% de chance de não ganhar nada",
                 "Safe": "ganho garantido de R${safe}",
                 "SafeNumber": 500
@@ -33,18 +32,16 @@
             },
         "etapa2":
             {
-                "Text":`<strong> Escolha o seu cenário: tudo ou nada? </strong> <br>
-                        Imagine que você investiu e verifica como esses investimentos estão indo: <br>
-                        Qual cenário você se sentiria mais confortável?`,
+                "Text":`<strong> Escolha o seu cenário: tudo ou nada? </strong> <br> 
+                        O que você prefere?`,
                 "Risk": " 50% de chance de ganhar R$1.000 <br> 50% de chance de perder R${risk}",
                 "Safe": "não ganhar ou perder nada",
                 "RiskNumber": 1000
             },
         "etapa3":
             {
-                "Text":`<strong>Escolha o seu cenário: perda certa ou perda incerto?</strong> <br>
-                Imagine que você investiu e verifica como esses investimentos estão indo: <br>
-                qual cenário você se sentiria mais confortável?`,
+                "Text":`<strong>Escolha o seu cenário: perda certa ou perda incerto?</strong> <br> 
+                O que você prefere?`,
                 "Risk": "50% de chance de não ganhar nem perder <br> 50% de chance de perder {risk}",
                 "Safe": "perda garantida de {safe}",
                 "RiskNumber": 440,
@@ -53,6 +50,7 @@
     var stage = "etapa1"
     var respostas = {};
 
+   
     function buildCircle(colorLeft, textLeft, colorRight = '', textRight = ''){
         if(colorRight) {
             const divCircleRisk = document.createElement("div");
@@ -217,7 +215,7 @@
         return(Math.round(valor / multiple) * multiple)
     }
 
-    function processo_etapa1(houve_torcao, selecionado){
+   function processo_etapa1(houve_torcao, selecionado){
         if(houve_torcao){
                 var conversor = {"etapa1":"etapa2","etapa2":"etapa3"}
                 let ultimo_numero = window.questions.etapa1.SafeNumber
@@ -251,6 +249,9 @@
         let ultima_movimentacao = window.respostas.etapa2[window.respostas.etapa2.length - 1];
         window.stage = conversor[window.stage];
         var multi = {"Safe": 5 / 6, "Risk": 1.5};
+        
+        window.respostas.etapa2 = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 5)
+        
         window.questions.etapa3.RiskNumber = arredondar_multiplo(multi[ultima_movimentacao] * ultimo_numero, 10);
          if(window.questions.etapa3.RiskNumber == 0)  {
             window.questions.etapa3.RiskNumber = 10
@@ -312,7 +313,7 @@
     function end(_){
         delete(window.respostas.final)
         localStorage.setItem("Quiz", JSON.stringify(window.respostas))
-        window.location.href = "Send.html"
+        window.location.href = "riskTolerance.html"
     }
 
     function next_question(){
@@ -379,19 +380,23 @@
 
     function instruction() {
     var questionText = document.querySelector('p[class="question"]');
+    questionText.style.fontSize = '30px'; // Define o tamanho da fonte
     questionText.innerHTML = 
-    
-    
+      
     `A partir de agora, você será apresentado a duas alternativas:
     <br><br>
-    <b>A</b> acontecerá com certeza, ou seja, com 100% de chance.
+    🔵 <b>Opção A:</b> Uma escolha segura com <b>100% de chance</b> de acontecer.
     <br><br>
+    🔴 <b>Opção B:</b> Uma jogada arriscada com <b>duas possíveis consequências</b>, cada uma com <b>50% de chance</b>.
     <b>B</b> terá dois resultados possíveis com probabilidades iguais de acontecer (50% de chance).
     </p>
     <br>
-    A alternativa B é como apostar em cara ou coroa em um jogo de cara ou coroa. Você tem 50% de chance de ganhar sua aposta e 50% de chance de perder sua aposta.
+    A alternativa B é como jogar "cara ou coroa" onde você tem igual chance de ganhar ou perder. Você tem 50% de chance de ganhar sua aposta e 50% de chance de perder sua aposta.
     <br><br>
-    ⚠️<b>ATENÇÃO: Os números irão mudar conforme você responde, e não há como voltar.`;
+         <b>  🔍 Pese suas opções cuidadosamente e escolha o que mais lhe agrada.
+        <br>  👉 Ao clicar em uma alternativa, você já estará selecionando ela.
+        <br> ⚠️ A cada escolha, os cenários mudarão. Fique atento às mudanças dos números!
+        <br> ⏳ Caso demore para os números mudarem, aguarde alguns segundos.`;
 
     var blocoResps = document.querySelector('div[id="alternativasCircle"]');
     blocoResps.innerHTML = '';

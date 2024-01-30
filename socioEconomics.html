@@ -200,46 +200,32 @@ function sumirBotaoProximo(sumir) {
     }
 
     function respInt(param){
-    if (param === 1) {
-        const input_box = document.querySelector('#alternativas > input')
-        if (!input_box.value) {
-            alert("A resposta está vazia")
-            return false
-        } else if (parseInt(input_box.value) > 100) {
-            alert("O valor não pode ser maior que 100");
-            return false;
-        } else {
-            window.resposta[window.id_questao] = input_box.value
-            return true
-        }
-    } else {
-        const input_boxes = document.querySelectorAll('#alternativas input')
-        let resp = {}
-        let allValuesValid = true;
-
-        input_boxes.forEach(box => {
-            if (box.value !== ''){
-                if (parseInt(box.value) > 100) {
-                    allValuesValid = false;
-                    return;
-                }
-                resp[box.getAttribute('alternativa')] = box.value
+        if (param === 1) {
+            const input_box = document.querySelector('#alternativas > input')
+            if (!input_box.value) {
+                alert("A resposta está vazia")
+                return false
+            } else {
+                window.resposta[window.id_questao] = input_box.value
+                return true
             }
-        })
-
-        if (!allValuesValid) {
-            alert("Nenhum dos valores pode ser maior que 100");
-            return false;
-        } else if (Object.keys(resp).length < param) {
-            alert('Preencha todos os campos, mesmo que com 0')
-            return false
         } else {
-            window.resposta[window.id_questao] = resp
-            return true
+            const input_boxs = document.querySelectorAll('#alternativas input')
+            let resp = {}
+            input_boxs.forEach(box => {
+                if (box.value !== ''){
+                    resp[box.getAttribute('alternativa')] = box.value
+                }
+            })
+            if (Object.keys(resp).length < param){
+                alert('Preencha todos os campos, mesmo que com 0')
+                return false
+            } else {
+                window.resposta[window.id_questao] = resp
+                return true
+            }
         }
     }
-}
-
 
     function removerCaracteresEspeciais(texto) {
         const regex = /[\r\t\n]/g;

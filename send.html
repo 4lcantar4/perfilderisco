@@ -73,10 +73,9 @@ function falhaNoEnvio() {
 }
 
 function calcularEExibirCoeficiente() {
-    if (localStorage.Quiz) {
+     if (localStorage.Quiz) {
         const quiz = JSON.parse(localStorage.Quiz);
         const coeficiente = Math.max(quiz.etapa1 /quiz.etapa3, 0.01);
-        
 
         const baseStyle = "font-family: 'Poppins', sans-serif; font-size: 1em;";
         const linhaDoTempoContainerStyle = "position: relative; margin: 52px 0;";
@@ -105,27 +104,28 @@ function calcularEExibirCoeficiente() {
         linhaDoTempoContainer.appendChild(linha);
 
         perfis.forEach((perfil, i) => {
-            const perfilItem = document.createElement("div");
-            perfilItem.style = itemLinhaDoTempoStyle + `left: calc(${(6 - i) * 100 / 7}% - 10px);`;
+        const perfilItem = document.createElement("div");
+        perfilItem.style = itemLinhaDoTempoStyle + `left: calc(${(6 - i) * 100 / 7}% - 10px);`;
 
-            if (5 - indexPerfil === i) {
-                perfilItem.style.backgroundColor = "#FF6600";
-                perfilItem.style.borderColor = "#FF6600";
+        if (5 - indexPerfil === i) {
+            perfilItem.style.backgroundColor = "#FF6600";
+            perfilItem.style.borderColor = "#FF6600";
 
-                const coeficienteElement = document.createElement("div");
-                coeficienteElement.style = `
-                    ${baseStyle}
-                    position: absolute;
-                    top: 100%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    font-size: 1em;
-                    color: #FF6600;
-                    font-weight: bold;
-                `;
-                coeficienteElement.textContent = `${coeficiente.toFixed(2)}`;
-                perfilItem.appendChild(coeficienteElement);
-            }
+            // Comentando o código que exibe o coeficiente
+            /* const coeficienteElement = document.createElement("div");
+            coeficienteElement.style = `
+                ${baseStyle}
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 1em;
+                color: #FF6600;
+                font-weight: bold;
+            `;
+            coeficienteElement.textContent = `${coeficiente.toFixed(2)}`;
+            perfilItem.appendChild(coeficienteElement); */
+        }
 
             linhaDoTempoContainer.appendChild(perfilItem);
 
@@ -253,7 +253,7 @@ novoTexto.innerHTML = `
           Av. Antônio Carlos, 6627 – Pampulha – Belo Horizonte – MG<br>
           CEP 31270-901<br>
           Sala 4039<br>
-          Ramal 7242<br>
+          Telefone:+55 (31) 3409-7242 <br>
           <a href="mailto:aureliano.bressan@gmail.com" style="color: #c00c20;">aureliano.bressan@gmail.com</a>
         </p>
       </div>

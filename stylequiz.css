@@ -437,7 +437,7 @@ li.nav a:hover:not(.active), #navres a:hover {
 }
 
 .circle .number {
-    font-size: 10px;
+    font-size: 22px;
     font-weight: bold;
     color: white;
     position: absolute;
