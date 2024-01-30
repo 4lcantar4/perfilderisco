@@ -131,6 +131,3 @@ function doGet(e) {
     range.setValues([row]);
 
     return ContentService.createTextOutput(JSON.stringify({"Status":"Success", "Http-status":200})).setMimeType(ContentService.MimeType.JAVASCRIPT);
-}
-
-
