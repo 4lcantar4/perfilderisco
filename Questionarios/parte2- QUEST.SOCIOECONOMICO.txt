@@ -1,5 +1,5 @@
 Condicional	Identificacao	Pergunta	Tipo de Resposta	Alternativa 1	Alternativa 2	Alternativa 3	Alternativa 4	Alternativa 5	Alternativa 6	Alternativa 7
-	QS1	Para fins de registro, por favor, forneça sua data de nascimento(dia/mês/ano)	S1	-	-	-	-	-	-	-
+	QS1	Por favor, usando o formato dia/mês/ano, informe: Quando você nasceu?	S1	-	-	-	-	-	-	-
 	QS2A	Quais das seguintes alternativas descreve melhor a forma como você se identifica hoje?	A4	Mulher	Homem	Queer, não-binário ou gênero fluido	Prefiro me autodescrever	-	-	-
 "window.resposta['QS2A'] == ""4"""	QS2B	Eu me identifico como: 	S1	-	-	-	-	-	-	-
 	QS3A	Sobre sua situação financeira, qual das seguintes opções melhor descreve seu cenário atual?	A3	Dependo de outras fontes de renda (pais, tios, etc.) e não tenho dependentes financeiros	Minha renda cobre todos os meus gastos e tenho dependentes financeiros	Minha renda cobre todos os meus gastos e não tenho dependentes financeiros	-	-	-	-
