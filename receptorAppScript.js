@@ -1,5 +1,5 @@
 const KEYS_EXPECTED_ORDER = ["SocioEconomics.QS1", "SocioEconomics.QS2A", "SocioEconomics.QS2B",
-    "SocioEconomics.QS3A", "SocioEconomics.QS3B", "SocioEconomics.QS4", "SocioEconomics.QS5", "SocioEconomics.QS7", "SocioEconomics.QS8", "RiskAverssion.SF1A", "RiskAverssion.SF1B", "RiskAverssion.SF2A",
+    "SocioEconomics.QS3A", "SocioEconomics.QS3B", "SocioEconomics.QS4", "SocioEconomics.QS5", "SocioEconomics.QS6", "SocioEconomics.QS8", "RiskAverssion.SF1A", "RiskAverssion.SF1B", "RiskAverssion.SF2A",
     "RiskAverssion.SF2B", "RiskAverssion.SF2C", "RiskAverssion.RTFK2", "RiskAverssion.RTAT2", "RiskAverssion.RTAT1",
     "RiskAverssion.RTAT3", "RiskAverssion.RTFK3", "RiskAverssion.RTFK1", "RiskAverssion.RTFIN1", "RiskAverssion.RTFIN2",
     "Quiz.etapa1", "Quiz.etapa2", "Quiz.etapa3"]
