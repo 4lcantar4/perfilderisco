@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link rel="stylesheet" href="stylesend.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
     <title>QUIZ-Qual é o seu perfil de investidor?</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -32,32 +33,50 @@
     </div>
 </div>
     <script type="text/javascript">
-       // Evento para o botão de reenvio
-document.getElementById("restartbutton").addEventListener("click", function() {
-    document.getElementById("restartbutton").style.display = "none";
-    sendInformation();
-});
+    // Função para gerar o fingerprint do usuário
+    function getFingerprint(callback) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(function () {
+                Fingerprint2.get(function (components) {
+                    var values = components.map(function (component) { return component.value });
+                    var murmur = Fingerprint2.x64hash128(values.join(''), 31);
+                    callback(murmur);
+                });
+            });
+        } else {
+            setTimeout(function () {
+                Fingerprint2.get(function (components) {
+                    var values = components.map(function (component) { return component.value });
+                    var murmur = Fingerprint2.x64hash128(values.join(''), 31);
+                    callback(murmur);
+                });  
+            }, 500);
+        }
+    }
 
-// Função para enviar as informações
-function sendInformation() {
-    let data = {};
-    data.SocioEconomics = JSON.parse(localStorage.SocioEconomics);
-    data.RiskAverssion = JSON.parse(localStorage.RiskAverssion);
-    data.Quiz = JSON.parse(localStorage.Quiz);
+    // Função modificada para enviar as informações
+    function sendInformation() {
+        getFingerprint(function(fingerprint) {
+            let data = {};
+            data.SocioEconomics = JSON.parse(localStorage.SocioEconomics);
+            data.RiskAverssion = JSON.parse(localStorage.RiskAverssion);
+            data.Quiz = JSON.parse(localStorage.Quiz);
+            data.Fingerprint = fingerprint;
 
-    let jsonData = JSON.stringify(data);
-    let encodedData = encodeURIComponent(jsonData);
+            let jsonData = JSON.stringify(data);
+            let encodedData = encodeURIComponent(jsonData);
 
-    let url = `https://script.google.com/macros/s/AKfycbwKXs5-CT12aEFmHEyUxtELeTAIyC0pi7GWkSl-EAfF3KvBxOLpGQ-LPGV5wDkqQ3-7MA/exec?data=${encodedData}`;
+            let url = `https://script.google.com/macros/s/AKfycbwKXs5-CT12aEFmHEyUxtELeTAIyC0pi7GWkSl-EAfF3KvBxOLpGQ-LPGV5wDkqQ3-7MA/exec?data=${encodedData}`;
 
-    fetch(url, {
-        method: "GET"
-    }).then(response => {
-        sucessoNoEnvio();
-    }).catch(error => {
-        falhaNoEnvio();
-    });
-}
+            fetch(url, {
+                method: "GET"
+            }).then(response => {
+                sucessoNoEnvio();
+            }).catch(error => {
+                falhaNoEnvio();
+            });
+        });
+    }
 
 // Função para lidar com sucesso no envio
 function sucessoNoEnvio() {
